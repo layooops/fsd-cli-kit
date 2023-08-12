@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/FsdConfig",
+  "definitions": {
+    "FsdConfig": {
+      "type": "object",
+      "properties": {
+        "autogenerate": {
+          "type": "boolean"
+        },
+        "globalSettings": {
+          "$ref": "#/definitions/GlobalSettings"
+        },
+        "customFiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "segment": {
+                "type": "string"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["segment", "files"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["autogenerate", "globalSettings"],
+      "additionalProperties": false
+    },
+    "GlobalSettings": {
+      "type": "object",
+      "properties": {
+        "scriptingLanguage": {
+          "type": "string",
+          "enum": ["javascript", "typescript"]
+        },
+        "styles": {
+          "type": "object",
+          "properties": {
+            "cssFramework": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "standard"
+                    },
+                    {
+                      "type": "string",
+                      "const": "css-modules"
+                    },
+                    {
+                      "type": "string",
+                      "const": "css-in-js"
+                    },
+                    {
+                      "$ref": "#/definitions/Other"
+                    }
+                  ]
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "cssInJsFramework": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "emotion"
+                },
+                {
+                  "type": "string",
+                  "const": "styled-components"
+                },
+                {
+                  "$ref": "#/definitions/Other"
+                }
+              ]
+            },
+            "cssPreprocessor": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "scss"
+                },
+                {
+                  "type": "string",
+                  "const": "sass"
+                },
+                {
+                  "type": "string",
+                  "const": "css"
+                },
+                {
+                  "$ref": "#/definitions/Other"
+                }
+              ]
+            }
+          },
+          "required": ["cssFramework", "cssInJsFramework", "cssPreprocessor"],
+          "additionalProperties": false
+        },
+        "testing": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "testFilePostfix": {
+              "type": "string"
+            }
+          },
+          "required": ["enabled", "testFilePostfix"],
+          "additionalProperties": false
+        },
+        "framework": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "react"
+            },
+            {
+              "type": "string",
+              "const": "vue"
+            },
+            {
+              "$ref": "#/definitions/Other"
+            }
+          ]
+        },
+        "stateManagement": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "redux"
+                },
+                {
+                  "type": "string",
+                  "const": "effector"
+                },
+                {
+                  "type": "string",
+                  "const": "zustand"
+                },
+                {
+                  "$ref": "#/definitions/Other"
+                }
+              ]
+            },
+            "templateFile": {
+              "type": "string"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        "documentation": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "documentTypes": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "markdown"
+                  },
+                  {
+                    "type": "string",
+                    "const": "storybook"
+                  },
+                  {
+                    "$ref": "#/definitions/Other"
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["enabled", "documentTypes"],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "scriptingLanguage",
+        "styles",
+        "testing",
+        "framework",
+        "stateManagement",
+        "documentation"
+      ],
+      "additionalProperties": false
+    },
+    "Other": {
+      "type": "string",
+      "enum": ["other", "none"]
+    }
+  }
+}

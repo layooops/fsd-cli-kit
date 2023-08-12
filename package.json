@@ -1,0 +1,61 @@
+{
+  "name": "create-fsd",
+  "version": "1.0.0",
+  "description": "A CLI tool for easily FSD development",
+  "author": {
+    "name": "Vitalii Astakhov",
+    "email": "vitalastakhov@gmail.com"
+  },
+  "keywords": [
+    "cli",
+    "feature-sliced-design",
+    "fsd"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "bin": {
+    "create-fsd": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=14.16"
+  },
+  "scripts": {
+    "typecheck": "tsc",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "format:fix": "prettier --ext .ts,.tsx src --write",
+    "lint": "eslint -c .eslintrc.cjs ./src",
+    "lint:fix": "eslint -c .eslintrc.cjs --fix ./src"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.4.2",
+    "@types/fs-extra": "^11.0.1",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^20.4.8",
+    "code-review-gpt": "^0.0.34",
+    "eslint": "^8.46.0",
+    "eslint-plugin-regexp": "^1.15.0",
+    "prettier": "^3.0.1",
+    "ts-json-schema-generator": "^1.2.0",
+    "tsup": "^6.7.0",
+    "type-fest": "^3.12.0",
+    "typescript-json-schema": "^0.59.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^3.0.1",
+    "chalk": "^5.2.0",
+    "commander": "^11.0.0",
+    "deepmerge": "^4.3.1",
+    "eslint-kit": "^10.4.0",
+    "execa": "^7.1.1",
+    "fs-extra": "^11.1.1",
+    "inquirer": "^9.2.7",
+    "ora": "^6.3.1",
+    "pino": "^8.15.0",
+    "pino-pretty": "^10.2.0",
+    "typescript": "^5.1.3"
+  }
+}
