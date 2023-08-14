@@ -5,6 +5,7 @@ import type {
 import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
 
 import { scriptingLanguageFileExtension } from "~/entities/fsd/lib/helpers/file-name-helpers";
+import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
 
 interface UiFolder {
   configOptions: FsdConfig["globalSettings"];
@@ -13,7 +14,7 @@ interface UiFolder {
 
 export function generateUiCSSFileName(
   css: StylesSettings,
-  sliceName = "slice",
+  sliceName = DEFAULT_SLICE_FILE_NAME,
 ): string | undefined {
   if (css.cssFramework === "none") {
     return undefined;
@@ -40,7 +41,7 @@ export const cssInJSContent = (
 
 export const uiFolderWithTemplates = ({
   configOptions,
-  sliceName = "slice",
+  sliceName = DEFAULT_SLICE_FILE_NAME,
 }: UiFolder): Folder => {
   const { styles: css, scriptingLanguage } = configOptions;
   const uiCSSFileName = generateUiCSSFileName(css, sliceName);

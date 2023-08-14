@@ -1,11 +1,17 @@
-import type { FileData } from "~/entities/fsd/lib/types/folder-structure.interface";
+import type {
+  FileData,
+  FolderFile,
+} from "~/entities/fsd/lib/types/folder-structure.interface";
 
 import fs from "fs";
 import path from "path";
 
+import {
+  CAMEL_CASE_REGEX,
+  DEFAULT_SLICE_FILE_NAME,
+} from "~/shared/lib/constants";
+
 const COMPONENT_TEMPLATE_REGEX = /\/\*\sCOMPONENT_TEMPLATE\s\*\//g;
-const CAMEL_CASE_REGEX = /(?:^|-|_)(\w)/g;
-const DEFAULT_COMPONENT_NAME = "Slice";
 
 export async function createFolder(dirPath?: string): Promise<void> {
   try {
@@ -36,7 +42,7 @@ export async function readTemplateFile(
 }
 
 export async function processFile(
-  fileOrData: string | FileData | null | undefined,
+  fileOrData: FolderFile | undefined,
   folderPath: string,
   baseTemplateDir: string,
   baseDir: string | null = null,
@@ -110,7 +116,7 @@ async function processFileData(
     .trim();
 
   if (finalContent) {
-    const componentName = baseDir || DEFAULT_COMPONENT_NAME;
+    const componentName = baseDir || DEFAULT_SLICE_FILE_NAME;
     const camelCasedComponentName = componentName.replace(
       CAMEL_CASE_REGEX,
       (_, char) => char.toUpperCase(),

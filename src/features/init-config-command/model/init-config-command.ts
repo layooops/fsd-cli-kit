@@ -14,7 +14,7 @@ import {
   promptTesting,
   promptTestingPostfix,
 } from "~/entities/config/model/prompts";
-import { FSD_CONFIG_NAME } from "~/shared/lib/constants";
+import { FSD_CONFIG_NAME, JSON_INDENTATION } from "~/shared/lib/constants";
 
 import { logNextStepsAfterConfigInit } from "./next-steps-after-config-init";
 
@@ -78,11 +78,21 @@ export const initConfigCommand = async (): Promise<void> => {
         await promptStateManagement();
     }
   }
+  const formattedConfigData = JSON.stringify(
+    configCliResults,
+    null,
+    JSON_INDENTATION,
+  );
 
-  const data = JSON.stringify(configCliResults, null, 2);
-  fs.writeFileSync(FSD_CONFIG_NAME, data);
-
-  if (data) {
-    logNextStepsAfterConfigInit(data);
+  try {
+    fs.writeFileSync(FSD_CONFIG_NAME, formattedConfigData);
+    if (formattedConfigData) {
+      logNextStepsAfterConfigInit(formattedConfigData);
+    }
+  } catch (error) {
+    console.error(
+      "An error occurred while writing the configuration file:",
+      error,
+    );
   }
 };

@@ -3,22 +3,22 @@
 import { logger } from "./shared/lib/utils";
 import { useFsdCliCommands } from "./widgets/commands";
 
-const main = async () => {
-  await useFsdCliCommands();
+const EXIT_SUCCESS = 0;
+const EXIT_FAILURE = 1;
 
-  process.exit(0);
+const main = async () => {
+  try {
+    await useFsdCliCommands();
+    process.exit(EXIT_SUCCESS);
+  } catch (error) {
+    logger("Installation aborted due to an error:", "error");
+
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error has occurred.";
+    logger(errorMessage, "error");
+
+    process.exit(EXIT_FAILURE);
+  }
 };
 
-main().catch((error) => {
-  logger("Aborting installation...", "error");
-  if (error instanceof Error) {
-    logger(error.message, "error");
-  } else {
-    logger(
-      "An unknown error has occurred.Please open an issue on GitHub with the below:",
-      "error",
-    );
-    console.log(error);
-  }
-  process.exit(1);
-});
+main();

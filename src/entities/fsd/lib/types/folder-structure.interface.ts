@@ -4,8 +4,9 @@ export interface FileData {
   template?: string;
 }
 
-export interface FolderStructure {
-  [folderName: string]: (string | FileData | null)[] | FolderStructure;
-}
+export type FolderFile = null | FileData | string;
+export type Folder = FolderFile[];
 
-export type Folder = (null | FileData | string)[];
+export interface FolderStructure {
+  [folderName: string]: Folder | FolderStructure;
+}

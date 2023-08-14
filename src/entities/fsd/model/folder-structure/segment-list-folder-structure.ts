@@ -65,7 +65,7 @@ export const segmentListFolderStructure = async ({
       }
     }
   } catch (error) {
-    console.error("Error processing custom files:", error);
+    console.error("Error processing custom files:", error)
   }
 
   return folderStructure;

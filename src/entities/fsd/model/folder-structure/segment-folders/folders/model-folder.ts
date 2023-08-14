@@ -5,6 +5,7 @@ import type {
 import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
 
 import { scriptingLanguageFileExtension } from "~/entities/fsd/lib/helpers/file-name-helpers";
+import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
 
 interface ModelFolder {
   configOptions: FsdConfig["globalSettings"];
@@ -12,7 +13,7 @@ interface ModelFolder {
 }
 
 export const generateModelFileName = (
-  sliceName = "slice",
+  sliceName = DEFAULT_SLICE_FILE_NAME,
   scriptingLanguage: ScriptingLanguageType,
 ): string => {
   return `${sliceName}.model.${scriptingLanguageFileExtension(
@@ -22,7 +23,7 @@ export const generateModelFileName = (
 
 export const modelFolderWithTemplates = ({
   configOptions,
-  sliceName = "slice",
+  sliceName,
 }: ModelFolder): Folder => {
   const modelFileName = generateModelFileName(
     sliceName,

@@ -1,5 +1,6 @@
 import type {
-  FileData,
+  Folder,
+  FolderFile,
   FolderStructure,
 } from "../types/folder-structure.interface";
 import type { FsdSegment } from "../types/fsd.interface";
@@ -8,7 +9,8 @@ import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
 import fse from "fs-extra";
 import path from "path";
 
-import { FSD_CONFIG_NAME } from "~/shared/lib/constants";
+import { FILE_NOT_FOUND_CODE, FSD_CONFIG_NAME } from "~/shared/lib/constants";
+import { logger } from "~/shared/lib/utils";
 
 export function findParentConfigFileInDirectory(
   directory: string,
@@ -32,8 +34,13 @@ export const readCustomFile = async ({
 }: {
   customFilesBasePath?: string;
   filePath: string;
-}): Promise<FileData | null> => {
-  const customFilePath = customFilesBasePath + filePath.slice(1);
+}): Promise<FolderFile> => {
+
+  const SLICE_START = 1;
+  const customFilePath = path.join(
+    customFilesBasePath || "",
+    filePath.slice(SLICE_START),
+  );
   try {
     const content = await fse.promises.readFile(customFilePath, "utf8");
     return {
@@ -41,12 +48,24 @@ export const readCustomFile = async ({
       content,
     };
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      console.warn(`Warning: Custom file "${customFilePath}" not found.`);
+    const errnoCode = (error as NodeJS.ErrnoException).code;
+    if (errnoCode === FILE_NOT_FOUND_CODE) {
+      logger(`Warning: Custom file "${customFilePath}" not found.`, "error");
       return null;
     }
     throw error;
   }
+};
+
+const findCustomFilesForSegment = (config: FsdConfig, segment: FsdSegment) => {
+  return config.customFiles?.find((file) => file.segment === segment) || null;
+};
+
+const processCustomFiles = async (
+  customFilesBasePath: string | undefined,
+  filePath: string,
+) => {
+  return readCustomFile({ customFilesBasePath, filePath });
 };
 
 export async function processCustomFilesForSegment(
@@ -55,16 +74,14 @@ export async function processCustomFilesForSegment(
   segment: FsdSegment,
   customFilesBasePath?: string,
 ): Promise<void> {
-  const customFilesSegment = config.customFiles?.find(
-    (file) => file.segment === segment,
-  );
+  const customFilesSegment = findCustomFilesForSegment(config, segment);
 
   if (customFilesSegment) {
-    const segmentFiles: (FileData | null)[] = await Promise.all(
-      customFilesSegment.files.map(async (filePath) =>
-        readCustomFile({ customFilesBasePath, filePath }),
-      ),
+    const segmentFilesPromises = customFilesSegment.files.map((filePath) =>
+      processCustomFiles(customFilesBasePath, filePath),
     );
+
+    const segmentFiles: Folder = await Promise.all(segmentFilesPromises);
 
     const filteredSegmentFiles = segmentFiles.filter((file) => file !== null);
 

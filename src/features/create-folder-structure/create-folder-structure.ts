@@ -1,5 +1,5 @@
 import type {
-  FileData,
+  Folder,
   FolderStructure,
 } from "~/entities/fsd/lib/types/folder-structure.interface";
 
@@ -30,7 +30,7 @@ export async function createFolderStructure({
   baseDir?: string;
   baseTemplateDir: string;
 }): Promise<void> {
-  const filesInIndex: (string | FileData | null)[] = [];
+  const filesInIndex: Folder = [];
 
   const baseDirExists = await fse.promises.stat(baseDir).catch(() => null);
 
@@ -62,7 +62,7 @@ export async function createFolderStructure({
   }
 
   async function processFilesOrSubfolders(
-    filesOrSubfolders: (string | FileData | null)[],
+    filesOrSubfolders: Folder,
     folderPath: string,
   ): Promise<void> {
     for (const fileOrData of filesOrSubfolders) {

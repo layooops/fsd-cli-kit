@@ -39,9 +39,14 @@ const isInsideGitRepo = async (dir: string): Promise<boolean> => {
 
 const getGitVersion = () => {
   const stdout = execSync("git --version").toString().trim();
-  const gitVersionTag = stdout.split(" ")[2];
-  const major = gitVersionTag?.split(".")[0];
-  const minor = gitVersionTag?.split(".")[1];
+  const gitVersionTag = stdout.split(" ")[2]; // TODO: Убрать этот magic number. Пока не знаю, что это такое.
+  const versionComponents = gitVersionTag?.split(".");
+
+  const majorIndex = 0;
+  const minorIndex = 1;
+
+  const major = versionComponents?.[majorIndex];
+  const minor = versionComponents?.[minorIndex];
   return { major: Number(major), minor: Number(minor) };
 };
 
@@ -53,6 +58,30 @@ const getDefaultBranch = () => {
 
   return stdout;
 };
+
+// Версия git, в которой добавили --initial-branch
+const messages = {
+  gitInitialized: `${chalk.green(
+    "Successfully initialized and staged",
+  )} ${chalk.green.bold("git")}\n`,
+  gitFailed: `${chalk.bold.red(
+    "Failed:",
+  )} could not initialize git. Update git to the latest version!\n`,
+  gitAlreadyInitialized: (dirName: string) =>
+    `${chalk.redBright.bold(
+      "Warning:",
+    )} Git is already initialized in "${dirName}". Initializing a new git repository would delete the previous history. Would you like to continue anyways?`,
+  gitInsideWorktree: (dirName: string) =>
+    `${chalk.redBright.bold(
+      "Warning:",
+    )} "${dirName}" is already in a git worktree. Would you still like to initialize a new git repository in this directory?`,
+};
+
+interface GitVersion {
+  major: number;
+  minor: number;
+}
+const GIT_MAJOR_MIN_VERSION: GitVersion = { major: 2, minor: 28 };
 
 // This initializes the Git-repository for the project
 export const initializeGit = async (projectDir: string) => {
@@ -67,30 +96,26 @@ export const initializeGit = async (projectDir: string) => {
 
   const isRoot = isRootGitRepo(projectDir);
   const isInside = await isInsideGitRepo(projectDir);
-  const dirName = path.parse(projectDir).name; // skip full path for logging
+  const dirName = path.parse(projectDir).name; // Пропускаем полный путь для логгирования
 
   if (isInside && isRoot) {
-    // Dir is a root git repo
+    // Директория является корневым git-репозиторием
     spinner.stop();
     const overwriteGit = await confirm({
-      message: `${chalk.redBright.bold(
-        "Warning:",
-      )} Git is already initialized in "${dirName}". Initializing a new git repository would delete the previous history. Would you like to continue anyways?`,
+      message: messages.gitAlreadyInitialized(dirName),
       default: false,
     });
     if (!overwriteGit) {
       spinner.info("Skipping Git initialization.");
       return;
     }
-    // Deleting the .git folder
+    // Удаляем папку .git
     fs.removeSync(path.join(projectDir, ".git"));
   } else if (isInside && !isRoot) {
-    // Dir is inside a git worktree
+    // Директория находится внутри git worktree
     spinner.stop();
     const initializeChildGitRepo = await confirm({
-      message: `${chalk.redBright.bold(
-        "Warning:",
-      )} "${dirName}" is already in a git worktree. Would you still like to initialize a new git repository in this directory?`,
+      message: messages.gitInsideWorktree(dirName),
       default: false,
     });
     if (!initializeChildGitRepo) {
@@ -99,37 +124,33 @@ export const initializeGit = async (projectDir: string) => {
     }
   }
 
-  // We're good to go, initializing the git repo
+  // Инициализация git-репозитория
   try {
     const branchName = getDefaultBranch();
 
-    // --initial-branch flag was added in git v2.28.0
-    const { major, minor } = getGitVersion();
-    if (major < 2 || (major === 2 && minor < 28)) {
+    // Проверка версии git для использования --initial-branch
+    const currentGitVersion = getGitVersion();
+    const shouldUseInitialBranch =
+      currentGitVersion.major > GIT_MAJOR_MIN_VERSION.major ||
+      (currentGitVersion.major === GIT_MAJOR_MIN_VERSION.major &&
+        currentGitVersion.minor >= GIT_MAJOR_MIN_VERSION.minor);
+
+    if (shouldUseInitialBranch) {
+      await execa("git", ["init", `--initial-branch=${branchName}`], {
+        cwd: projectDir,
+      });
+    } else {
       await execa("git", ["init"], { cwd: projectDir });
-      // symbolic-ref is used here due to refs/heads/master not existing
-      // It is only created after the first commit
+      // symbolic-ref используется здесь из-за отсутствия refs/heads/master
+      // Он создается только после первого коммита
       // https://superuser.com/a/1419674
       await execa("git", ["symbolic-ref", "HEAD", `refs/heads/${branchName}`], {
         cwd: projectDir,
       });
-    } else {
-      await execa("git", ["init", `--initial-branch=${branchName}`], {
-        cwd: projectDir,
-      });
     }
     await execa("git", ["add", "."], { cwd: projectDir });
-    spinner.succeed(
-      `${chalk.green("Successfully initialized and staged")} ${chalk.green.bold(
-        "git",
-      )}\n`,
-    );
+    spinner.succeed(messages.gitInitialized);
   } catch (error) {
-    // Safeguard, should be unreachable
-    spinner.fail(
-      `${chalk.bold.red(
-        "Failed:",
-      )} could not initialize git. Update git to the latest version!\n`,
-    );
+    spinner.fail(messages.gitFailed);
   }
 };

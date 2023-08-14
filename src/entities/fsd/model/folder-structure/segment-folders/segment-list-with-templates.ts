@@ -4,6 +4,7 @@ import type { FsdSegment } from "~/entities/fsd/lib/types/fsd.interface";
 
 import { generatePublicApiFileName } from "~/entities/fsd/lib/helpers/file-name-helpers";
 import { fsdSegments } from "~/entities/fsd/lib/types/fsd.interface";
+import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
 
 import {
   apiFolderWithTemplates,
@@ -16,7 +17,7 @@ type SegmentList = Record<FsdSegment, Folder>;
 
 export const fsdSegmentListWithTemplates = ({
   configOptions,
-  sliceName = "slice",
+  sliceName = DEFAULT_SLICE_FILE_NAME,
 }: {
   configOptions: FsdConfig;
   sliceName?: string;
