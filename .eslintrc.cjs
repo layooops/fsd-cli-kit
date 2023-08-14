@@ -12,6 +12,8 @@ module.exports = configure({
     rules: {
       "no-console": "off",
       "@typescript-eslint/naming-convention": "warn",
+      "no-magic-numbers": "warn",
+      "no-useless-catch": "error",
       "@typescript-eslint/no-unused-expressions": "off",
       "@typescript-eslint/consistent-type-imports": "error",
       "simple-import-sort/imports": [
