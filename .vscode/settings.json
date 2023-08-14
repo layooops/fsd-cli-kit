@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "eslint",
     "vscode",
-    "tests"
+    "tests",
+    "package"
   ]
 }

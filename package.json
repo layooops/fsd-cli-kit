@@ -21,13 +21,22 @@
     "node": ">=14.16"
   },
   "scripts": {
-    "typecheck": "tsc",
-    "build": "tsup",
+    "\n======= HELPERS ============================": "",
+    "ts": "tsc --noEmit",
+    "ts:watch": "npm run ts -- --watch",
+    "\n======= DEVELOPMENT =========================": "",
     "dev": "tsup --watch",
+    "\n======= PRODUCTION ==========================": "",
+    "build": "tsup",
     "start": "node dist/index.js",
-    "format:fix": "prettier --ext .ts,.tsx src --write",
-    "lint": "eslint -c .eslintrc.cjs ./src",
-    "lint:fix": "eslint -c .eslintrc.cjs --fix ./src"
+    "\n======= LINTING ============================": "",
+    "format:fix": "prettier --write \"./src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "lint": "eslint -c .eslintrc.cjs \"./src/**/*.{ts,tsx,js,jsx}\"",
+    "lint:fix": "npm run lint --fix",
+    "\n======= TESTING ============================": "",
+    "test:unit": "jest",
+    "test:unit:watch": "jest --watch",
+    "coverage": "jest --coverage"
   },
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.4.2",
