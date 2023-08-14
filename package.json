@@ -13,7 +13,6 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "type": "module",
   "exports": "./dist/index.js",
   "bin": {
     "create-fsd": "./dist/index.js"
@@ -34,11 +33,14 @@
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/fs-extra": "^11.0.1",
     "@types/inquirer": "^9.0.3",
+    "@types/jest": "^29.5.3",
     "@types/node": "^20.4.8",
     "code-review-gpt": "^0.0.34",
     "eslint": "^8.46.0",
     "eslint-plugin-regexp": "^1.15.0",
+    "jest": "^29.6.2",
     "prettier": "^3.0.1",
+    "ts-jest": "^29.1.1",
     "ts-json-schema-generator": "^1.2.0",
     "tsup": "^6.7.0",
     "type-fest": "^3.12.0",
