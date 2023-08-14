@@ -25,5 +25,8 @@ module.exports = configure({
     },
     extends: ["plugin:regexp/recommended"],
     plugins: ["regexp"],
+    "env": {
+      "jest": true
+    }
   },
 });
