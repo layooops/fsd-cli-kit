@@ -23,20 +23,20 @@ You can install the FSD CLI program both globally and locally. Here's how:
 Install the FSD CLI globally using the following command:
 
 ```bash
-npm install -g fsd-cli
+npm install -g fsd-cli-kit
 ```
 
-After global installation, you can use the `fsd-cli` command directly from the terminal.
+After global installation, you can use the `fsd-cli-kit` command directly from the terminal.
 
 ### Local Installation
 
 To install the FSD CLI locally in your project, use the following command:
 
 ```bash
-npm install fsd-cli
+npm install fsd-cli-kit
 ```
 
-You can then use the FSD CLI using `npx fsd-cli` from the terminal within your project directory.
+You can then use the FSD CLI using `npx fsd-cli-kit` from the terminal within your project directory.
 
 ## Commands
 
@@ -105,7 +105,7 @@ Here are a few examples of how to use the FSD CLI:
 1. Initialize the initial FSD configuration:
 
    ```bash
-   fsd-cli init
+   fsd-cli-kit init
    ```
 
    This will guide you through setting up your FSD configuration.
@@ -113,7 +113,7 @@ Here are a few examples of how to use the FSD CLI:
 2. Generate the FSD structure:
 
    ```bash
-   fsd-cli generate
+   fsd-cli-kit generate
    ```
 
    This will generate the folder structure based on your FSD configuration.
@@ -121,7 +121,7 @@ Here are a few examples of how to use the FSD CLI:
 3. Generate the FSD structure with example content:
 
    ```bash
-   fsd-cli examples
+   fsd-cli-kit examples
    ```
 
    This will generate the folder structure with example content to help you get started.

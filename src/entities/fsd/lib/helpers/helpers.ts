@@ -11,14 +11,14 @@ import path from "path";
 
 import {
   FILE_NOT_FOUND_CODE,
-  FSD_CONFIG_NAME_NO_EXT,
+  FSD_CONFIG_NAME,
 } from "~/shared/lib/constants";
 import { logger } from "~/shared/lib/utils";
 
 export function findParentConfigFileInDirectory(
   directory: string,
 ): string | undefined {
-  const configFile = path.join(directory, FSD_CONFIG_NAME_NO_EXT);
+  const configFile = path.join(directory, FSD_CONFIG_NAME);
   if (fse.existsSync(configFile)) {
     return path.dirname(configFile);
   }
@@ -38,11 +38,13 @@ export const readCustomFile = async ({
   customFilesBasePath?: string;
   filePath: string;
 }): Promise<FolderFile> => {
+
   const SLICE_START = 1;
   const customFilePath = path.join(
     customFilesBasePath || "",
     filePath.slice(SLICE_START),
   );
+
   try {
     const content = await fse.promises.readFile(customFilePath, "utf8");
     return {
