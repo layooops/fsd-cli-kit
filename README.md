@@ -1,6 +1,6 @@
-# FSD CLI Program
+# fsd-cli-kit
 
-A command-line tool for effortlessly generating folder structures using the [Feature-Sliced Design](https://feature-sliced.design) methodology.
+A command-line tool for generating folder structures using the [Feature-Sliced Design](https://feature-sliced.design) methodology.
 
 # Table of Contents
 
@@ -16,7 +16,7 @@ For more information about the Feature-Sliced Design methodology and its princip
 
 ## Installation
 
-You can install the FSD CLI program both globally and locally. Here's how:
+You can install the fsd-cli-kit both globally and locally. Here's how:
 
 ### Global Installation
 
@@ -40,7 +40,7 @@ You can then use the FSD CLI using `npx fsd-cli-kit` from the terminal within yo
 
 ## Commands
 
-The FSD CLI program provides the following commands with their aliases and descriptions:
+The fsd-cli-kit provides the following commands with their aliases and descriptions:
 
 | Command    | Alias   | Description                                      | Options                  |
 | ---------- | ------- | ------------------------------------------------ | ------------------------ |

@@ -1,6 +1,6 @@
 {
   "name": "fsd-cli-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CLI tool for easily FSD development",
   "author": {
     "name": "Vitalii Astakhov",
@@ -11,6 +11,14 @@
     "feature-sliced-design",
     "fsd"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitaliiastakhov/fsd-cli-kit"
+  },
+  "bugs": {
+    "url": "https://github.com/vitaliiastakhov/fsd-cli-kit/issues"
+  },
+  "homepage": "https://github.com/vitaliiastakhov/fsd-cli-kit#readme",
   "license": "MIT",
   "main": "index.js",
   "exports": "./dist/index.js",
