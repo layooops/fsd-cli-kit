@@ -1,6 +1,6 @@
 {
   "name": "fsd-cli-kit",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A CLI tool for easily FSD development",
   "author": {
     "name": "Vitalii Astakhov",
@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/vitaliiastakhov/fsd-cli-kit#readme",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "exports": "./dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "bin": {
     "fsd-cli-kit": "./dist/index.js"
   },
