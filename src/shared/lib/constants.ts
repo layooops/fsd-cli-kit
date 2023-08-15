@@ -16,7 +16,8 @@ export const DEFAULT_SLICE_FILE_NAME = "slice";
 export const CAMEL_CASE_REGEX = /(?:^|-|_)(\w)/g;
 export const JSON_INDENTATION = 2;
 export const FILE_NOT_FOUND_CODE = "ENOENT";
-export const FSD_CLI_APP = "fsd-cli";
+export const FSD_CLI_APP = "fsd-cli-kit";
 
 export const FSD_DOCUMENTATION_LINK = "https://feature-sliced.design";
-export const FSD_CLI_GITHUB_LINK = "https://github.com/vitaliiastakhov/fsd-cli";
+export const FSD_CLI_GITHUB_LINK =
+  "https://github.com/vitaliiastakhov/fsd-cli-kit";

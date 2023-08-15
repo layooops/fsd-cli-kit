@@ -1,5 +1,5 @@
 {
-  "name": "create-fsd",
+  "name": "fsd-cli-kit",
   "version": "1.0.0",
   "description": "A CLI tool for easily FSD development",
   "author": {
@@ -15,7 +15,7 @@
   "main": "index.js",
   "exports": "./dist/index.js",
   "bin": {
-    "create-fsd": "./dist/index.js"
+    "fsd-cli-kit": "./dist/index.js"
   },
   "engines": {
     "node": ">=14.16"
