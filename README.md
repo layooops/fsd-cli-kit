@@ -1,6 +1,6 @@
 # FSD CLI Program
 
-A command-line tool for effortlessly generating folder structures using the [Feature-Sliced Design](https://feature-sliced.design) methodology.
+A command-line tool for generating folder structures using the [Feature-Sliced Design](https://feature-sliced.design) methodology.
 
 # Table of Contents
 
