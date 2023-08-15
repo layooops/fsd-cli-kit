@@ -2,7 +2,7 @@ import type { InitCommandOptions } from "~/shared/api/fsd-cli-program";
 
 import fs from "fs";
 
-import { defaultFsdConfig } from "~/entities/config/model/default-fsd-config";
+import { defaultFsdConfig } from "~/entities/config/model/fsd-config-default";
 import {
   promptCssFramework,
   promptCssInJsFramework,
@@ -15,7 +15,7 @@ import {
   promptTesting,
   promptTestingPostfix,
 } from "~/entities/config/model/prompts";
-import { promptNamingConventionFile } from "~/entities/config/model/prompts/name-convention-prompts";
+import { promptNamingConvention } from "~/entities/config/model/prompts/name-convention-prompts";
 import {
   promptAutogeneration,
   promptConfigExist,
@@ -45,7 +45,12 @@ export const initConfigCommand = async (
     const { styles } = configCliResults.globalSettings;
 
     configCliResults.autogenerate = await promptAutogeneration();
-    configCliResults.namingConvention.file = await promptNamingConventionFile();
+    configCliResults.namingConvention.file = await promptNamingConvention(
+      "files",
+    );
+    configCliResults.namingConvention.folder = await promptNamingConvention(
+      "folder",
+    );
 
     if (configCliResults.autogenerate) {
       styles.cssFramework = await promptCssFramework();

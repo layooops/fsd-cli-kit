@@ -9,15 +9,13 @@ export const promptJSFramework = async () =>
     message: CONFIG_PROMPT_MESSAGES.globalSettings.framework,
     choices: [
       {
-        name: "react",
+        name: "react (default)",
         value: "react",
       },
       {
-        name: "vue",
         value: "vue",
       },
       {
-        name: "none",
         value: "none",
       },
     ],

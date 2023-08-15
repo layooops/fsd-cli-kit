@@ -108,9 +108,7 @@ Here are a few examples of how to use the FSD CLI:
    fsd-cli init
    ```
 
-   This will guide you through
-
-setting up your FSD configuration.
+   This will guide you through setting up your FSD configuration.
 
 2. Generate the FSD structure:
 

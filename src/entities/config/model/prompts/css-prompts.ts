@@ -9,19 +9,16 @@ export async function promptCssFramework() {
     message: CONFIG_PROMPT_MESSAGES.globalSettings.styles.cssFramework,
     choices: [
       {
-        name: "standard",
+        name: "standard (default)",
         value: "standard",
-      },
-      {
-        name: "css-modules",
+      }, {
         value: "css-modules",
       },
       {
-        name: "css-in-js",
+
         value: "css-in-js",
       },
       {
-        name: "none",
         value: "none",
       },
     ],
@@ -32,15 +29,13 @@ export async function promptCssPreprocessor() {
     message: CONFIG_PROMPT_MESSAGES.globalSettings.styles.cssPreprocessor,
     choices: [
       {
-        name: "none",
+        name: "none (default)",
         value: "css",
       },
       {
-        name: "scss",
         value: "scss",
       },
       {
-        name: "sass",
         value: "sass",
       },
     ],
@@ -51,15 +46,13 @@ export async function promptCssInJsFramework() {
     message: CONFIG_PROMPT_MESSAGES.globalSettings.styles.cssInJsFramework,
     choices: [
       {
-        name: "none",
+        name: "none (default)",
         value: "none",
       },
       {
-        name: "styled",
         value: "styled-components",
       },
       {
-        name: "emotion",
         value: "emotion",
       },
     ],

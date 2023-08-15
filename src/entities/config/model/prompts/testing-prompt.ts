@@ -9,16 +9,13 @@ export const promptTestingPostfix = async () =>
     message: CONFIG_PROMPT_MESSAGES.globalSettings.testing.testFilePostfix,
     choices: [
       {
-        name: "test",
+        name: "test (default)",
         value: "test",
       },
       {
-        name: "spec",
         value: "spec",
       },
-
       {
-        name: "none",
         value: "none",
       },
     ],

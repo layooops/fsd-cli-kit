@@ -8,10 +8,10 @@ export const promptFSDSegmentList = async (): Promise<FsdSegment[]> => {
   const answers = await checkbox<FsdSegment>({
     message: FSD_PROMPT_MESSAGES.segments.list,
     choices: [
-      { name: "ui", value: "ui" },
-      { name: "model", value: "model" },
-      { name: "api", value: "api" },
-      { name: "lib", value: "lib" },
+      { value: "ui" },
+      { value: "model" },
+      { value: "api" },
+      { value: "lib" },
       { name: "public api", value: "public-api" },
     ],
   });
@@ -22,10 +22,10 @@ export const promptFSDSingleSegment = async (): Promise<FsdSegment> => {
   const answer = await select<FsdSegment>({
     message: FSD_PROMPT_MESSAGES.segments.single,
     choices: [
-      { name: "ui", value: "ui" },
-      { name: "model", value: "model" },
-      { name: "api", value: "api" },
-      { name: "lib", value: "lib" },
+      { value: "ui" },
+      { value: "model" },
+      { value: "api" },
+      { value: "lib" },
     ],
   });
   return answer;

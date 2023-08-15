@@ -23,10 +23,6 @@ export const CONFIG_PROMPT_MESSAGES = {
       enabled: "Are you using documentation in your project? (yes/no)",
     },
   },
-  namingConvention: {
-    component: "What naming convention do you prefer for components?",
-    file: "What naming convention do you prefer for files?",
-  },
 };
 
 export const FSD_PROMPT_MESSAGES = {

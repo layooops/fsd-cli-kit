@@ -9,11 +9,10 @@ export const promptScriptingLanguage = async () =>
     message: CONFIG_PROMPT_MESSAGES.globalSettings.scriptingLanguage,
     choices: [
       {
-        name: "typescript",
+        name: "typescript (default)",
         value: "typescript",
       },
       {
-        name: "javascript",
         value: "javascript",
       },
     ],

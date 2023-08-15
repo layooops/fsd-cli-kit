@@ -9,19 +9,15 @@ export const promptChooseFSDLayer = async (): Promise<FSDLayers> => {
     message: FSD_PROMPT_MESSAGES.chooseLayer,
     choices: [
       {
-        name: "layer",
         value: "layer",
       },
       {
-        name: "slice",
         value: "slice",
       },
       {
-        name: "segments",
         value: "segments",
       },
       {
-        name: "single-segment",
         value: "single-segment",
       },
     ],

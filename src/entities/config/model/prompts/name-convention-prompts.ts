@@ -1,12 +1,10 @@
-import type { NamingConvention } from "~/entities/config/lib/types/fsd-config.interface";
+import type { NamingConventionTypes } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 
-import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
-
-export async function promptNamingConventionFile() {
-  return select<NamingConvention["file"]>({
-    message: CONFIG_PROMPT_MESSAGES.namingConvention.file,
+export async function promptNamingConvention(type: "files" | "folder") {
+  return select<NamingConventionTypes>({
+    message: `What naming convention do you prefer for ${type}?`,
     choices: [
       {
         name: "kebab-case (default)",
@@ -18,19 +16,6 @@ export async function promptNamingConventionFile() {
       },
       {
         name: "PascalCase",
-        value: "pascalCase",
-      },
-    ],
-  });
-}
-export async function promptNamingConventionComponent() {
-  return select<NamingConvention["component"]>({
-    message: CONFIG_PROMPT_MESSAGES.namingConvention.file,
-    choices: [
-      {
-        value: "camelCase",
-      },
-      {
         value: "pascalCase",
       },
     ],

@@ -9,19 +9,16 @@ export const promptStateManagement = async () =>
     message: CONFIG_PROMPT_MESSAGES.globalSettings.stateManagement,
     choices: [
       {
-        name: "none",
+        name: "none (default)",
         value: "none",
       },
       {
-        name: "redux",
         value: "redux",
       },
       {
-        name: "effector",
         value: "effector",
       },
       {
-        name: "zustand",
         value: "zustand",
       },
     ],
