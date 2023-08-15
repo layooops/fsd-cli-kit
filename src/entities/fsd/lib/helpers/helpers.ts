@@ -9,10 +9,7 @@ import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface
 import fse from "fs-extra";
 import path from "path";
 
-import {
-  FILE_NOT_FOUND_CODE,
-  FSD_CONFIG_NAME,
-} from "~/shared/lib/constants";
+import { FILE_NOT_FOUND_CODE, FSD_CONFIG_NAME } from "~/shared/lib/constants";
 import { logger } from "~/shared/lib/utils";
 
 export function findParentConfigFileInDirectory(
@@ -38,7 +35,6 @@ export const readCustomFile = async ({
   customFilesBasePath?: string;
   filePath: string;
 }): Promise<FolderFile> => {
-
   const SLICE_START = 1;
   const customFilePath = path.join(
     customFilesBasePath || "",
