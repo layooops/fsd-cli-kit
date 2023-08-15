@@ -3,6 +3,7 @@
     "eslint",
     "vscode",
     "tests",
-    "package"
+    "package",
+    "deps"
   ]
 }
