@@ -30,6 +30,5 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true
   },
-  "exclude": ["templates/template"],
-  "include": ["src", "tsup.config.ts", "./reset.d.ts"]
+  "include": ["src", "tsup.config.ts"]
 }
