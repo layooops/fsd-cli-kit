@@ -1,19 +1,21 @@
-export type Other = "other" | "none";
-
 export type ScriptingLanguageType = "javascript" | "typescript";
 
-export type CssFrameworkType = "standard" | "css-modules" | "css-in-js" | Other;
-export type CssInJsFrameworkType = "emotion" | "styled-components" | Other;
-export type CssPreprocessorType = "scss" | "sass" | "css" | Other;
+export type CssFrameworkType =
+  | "standard"
+  | "css-modules"
+  | "css-in-js"
+  | "none";
+export type CssInJsFrameworkType = "emotion" | "styled-components" | "none";
+export type CssPreprocessorType = "scss" | "sass" | "css" | "none";
 
 export interface StylesSettings {
-  cssFramework: CssFrameworkType | string;
+  cssFramework: CssFrameworkType;
   cssInJsFramework: CssInJsFrameworkType;
   cssPreprocessor: CssPreprocessorType;
 }
-export type FrameworkType = "react" | "vue" | Other;
-export type StateManagementType = "redux" | "effector" | "zustand" | Other;
-export type DocumentationType = "markdown" | "storybook" | Other;
+export type FrameworkType = "react" | "vue" | "none";
+export type StateManagementType = "redux" | "effector" | "zustand" | "none";
+export type DocumentationType = "markdown" | "storybook" | "none";
 
 interface TestingConfig {
   enabled: boolean;
@@ -44,8 +46,21 @@ export interface CustomFile {
   files: string[];
 }
 
+export type NamingConventionTypes =
+  | "pascalCase"
+  | "camelCase"
+  | "snakeCase"
+  | "kebabCase";
+
+export interface NamingConvention {
+  file: NamingConventionTypes;
+  folder: NamingConventionTypes;
+  component: NamingConventionTypes;
+}
+
 export interface FsdConfig {
   autogenerate: boolean;
+  namingConvention: NamingConvention;
   globalSettings: GlobalSettings;
   customFiles?: CustomFile[];
 }

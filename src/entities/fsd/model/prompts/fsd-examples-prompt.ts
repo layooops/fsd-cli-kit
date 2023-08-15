@@ -1,10 +1,10 @@
 import { confirm } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { FSD_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const useExamplesForFSDPrompt = async (): Promise<boolean> => {
   const example = await confirm({
-    message: PROMPT_MESSAGES.FSD.ADD_EXAMPLES,
+    message: FSD_PROMPT_MESSAGES.addExamples,
     default: false,
   });
 

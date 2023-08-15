@@ -1,12 +1,12 @@
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { confirm, select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptTestingPostfix = async () =>
   select<FsdConfig["globalSettings"]["testing"]["testFilePostfix"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.TESTING.POSTFIX,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.testing.testFilePostfix,
     choices: [
       {
         name: "test",
@@ -16,10 +16,7 @@ export const promptTestingPostfix = async () =>
         name: "spec",
         value: "spec",
       },
-      {
-        name: "other",
-        value: "other",
-      },
+
       {
         name: "none",
         value: "none",
@@ -29,6 +26,6 @@ export const promptTestingPostfix = async () =>
 
 export const promptTesting = async () =>
   confirm({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.TESTING.ENABLED,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.testing.enabled,
     default: true,
   });

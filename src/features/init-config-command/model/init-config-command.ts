@@ -1,4 +1,5 @@
-import { confirm, input } from "@inquirer/prompts";
+import type { InitCommandOptions } from "~/shared/api/fsd-cli-program";
+
 import fs from "fs";
 
 import { defaultFsdConfig } from "~/entities/config/model/default-fsd-config";
@@ -14,80 +15,83 @@ import {
   promptTesting,
   promptTestingPostfix,
 } from "~/entities/config/model/prompts";
-import { FSD_CONFIG_NAME, JSON_INDENTATION } from "~/shared/lib/constants";
+import { promptNamingConventionFile } from "~/entities/config/model/prompts/name-convention-prompts";
+import {
+  promptAutogeneration,
+  promptConfigExist,
+} from "~/entities/config/model/prompts/other-prompts";
+import { FSD_CONFIG_NAME } from "~/shared/lib/constants";
+import { logger } from "~/shared/lib/utils";
+import { formatJsonData } from "~/shared/lib/utils/format-json";
+import { readFSDConfigFile } from "~/shared/lib/utils/read-config-file";
 
-import { logNextStepsAfterConfigInit } from "./next-steps-after-config-init";
+import { logNextStepsAfterInit } from "./next-steps-after-init";
 
-export const otherPrompt = async (message: string): Promise<string> => {
-  const slice = await input({
-    message,
-  });
-
-  return slice;
-};
-
-async function promptAutogeneration(): Promise<boolean> {
-  return confirm({
-    message:
-      "Would you like to auto-generate templates for some segments? (yes/no)",
-    default: false,
-  });
-}
-
-export const initConfigCommand = async (): Promise<void> => {
+export const initConfigCommand = async (
+  options?: InitCommandOptions,
+): Promise<void> => {
   const configCliResults = { ...defaultFsdConfig };
-  const { styles } = configCliResults.globalSettings;
+  const targetDir = process.cwd();
+  const config = await readFSDConfigFile({ directory: targetDir, init: true });
+  let overwrite = true;
+  if (config) {
+    overwrite = await promptConfigExist();
+  }
+  if (!overwrite) {
+    logger("Existing configuration will be preserved.", "success");
+    return;
+  }
+  if (!options?.yes) {
+    const { styles } = configCliResults.globalSettings;
 
-  configCliResults.autogenerate = await promptAutogeneration();
+    configCliResults.autogenerate = await promptAutogeneration();
+    configCliResults.namingConvention.file = await promptNamingConventionFile();
 
-  if (configCliResults.autogenerate) {
-    styles.cssFramework = await promptCssFramework();
+    if (configCliResults.autogenerate) {
+      styles.cssFramework = await promptCssFramework();
 
-    if (styles.cssFramework === "other") {
-      styles.cssFramework = await otherPrompt("Other css name:");
-    }
+      if (styles.cssFramework === "css-in-js") {
+        styles.cssInJsFramework = await promptCssInJsFramework();
+      }
 
-    if (styles.cssFramework === "css-in-js") {
-      styles.cssInJsFramework = await promptCssInJsFramework();
-    }
+      if (
+        styles.cssFramework !== "css-in-js" &&
+        styles.cssFramework !== "none"
+      ) {
+        styles.cssPreprocessor = await promptCssPreprocessor();
+      }
 
-    if (styles.cssFramework !== "css-in-js" && styles.cssFramework !== "none") {
-      styles.cssPreprocessor = await promptCssPreprocessor();
-    }
+      configCliResults.globalSettings.scriptingLanguage =
+        await promptScriptingLanguage();
+      configCliResults.globalSettings.framework = await promptJSFramework();
+      configCliResults.globalSettings.testing.enabled = await promptTesting();
 
-    configCliResults.globalSettings.scriptingLanguage =
-      await promptScriptingLanguage();
-    configCliResults.globalSettings.framework = await promptJSFramework();
-    configCliResults.globalSettings.testing.enabled = await promptTesting();
+      if (configCliResults.globalSettings.testing.enabled) {
+        configCliResults.globalSettings.testing.testFilePostfix =
+          await promptTestingPostfix();
+      }
 
-    if (configCliResults.globalSettings.testing.enabled) {
-      configCliResults.globalSettings.testing.testFilePostfix =
-        await promptTestingPostfix();
-    }
+      configCliResults.globalSettings.documentation.enabled =
+        await promptDocumentation();
 
-    configCliResults.globalSettings.documentation.enabled =
-      await promptDocumentation();
+      if (configCliResults.globalSettings.documentation.enabled) {
+        configCliResults.globalSettings.documentation.documentTypes =
+          await promptDocumentationTypes();
+      }
 
-    if (configCliResults.globalSettings.documentation.enabled) {
-      configCliResults.globalSettings.documentation.documentTypes =
-        await promptDocumentationTypes();
-    }
-
-    if (configCliResults.globalSettings.framework === "react") {
-      configCliResults.globalSettings.stateManagement.type =
-        await promptStateManagement();
+      if (configCliResults.globalSettings.framework === "react") {
+        configCliResults.globalSettings.stateManagement.type =
+          await promptStateManagement();
+      }
     }
   }
-  const formattedConfigData = JSON.stringify(
-    configCliResults,
-    null,
-    JSON_INDENTATION,
-  );
+
+  const formattedConfigData = formatJsonData(configCliResults);
 
   try {
     fs.writeFileSync(FSD_CONFIG_NAME, formattedConfigData);
     if (formattedConfigData) {
-      logNextStepsAfterConfigInit(formattedConfigData);
+      logNextStepsAfterInit(formattedConfigData);
     }
   } catch (error) {
     console.error(

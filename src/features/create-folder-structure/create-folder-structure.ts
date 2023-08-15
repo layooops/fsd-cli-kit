@@ -24,11 +24,9 @@ const dirAlreadyExistPrompt = async (dir?: string) => {
 export async function createFolderStructure({
   data,
   baseDir = "",
-  baseTemplateDir = "",
 }: {
   data?: FolderStructure;
   baseDir?: string;
-  baseTemplateDir: string;
 }): Promise<void> {
   const filesInIndex: Folder = [];
 
@@ -56,7 +54,6 @@ export async function createFolderStructure({
     if (!folderExists?.isDirectory()) {
       await createFolder(folderPath);
     } else {
-      // Если папка существует, удаляем все ее содержимое
       await fse.emptyDir(folderPath);
     }
   }
@@ -67,7 +64,7 @@ export async function createFolderStructure({
   ): Promise<void> {
     for (const fileOrData of filesOrSubfolders) {
       if (fileOrData !== null) {
-        await processFile(fileOrData, folderPath, baseTemplateDir, baseDir);
+        await processFile(fileOrData, folderPath);
       }
     }
   }
@@ -88,7 +85,6 @@ export async function createFolderStructure({
           : await createFolderStructure({
               data: filesOrSubfolders,
               baseDir: folderPath,
-              baseTemplateDir,
             });
       }
     }

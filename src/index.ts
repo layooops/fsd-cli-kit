@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
+import { runCli } from "./shared/api/fsd-cli-program";
 import { logger } from "./shared/lib/utils";
-import { useFsdCliCommands } from "./widgets/commands";
 
 const EXIT_SUCCESS = 0;
 const EXIT_FAILURE = 1;
 
 const main = async () => {
   try {
-    await useFsdCliCommands();
+    await runCli();
+
     process.exit(EXIT_SUCCESS);
   } catch (error) {
     logger("Installation aborted due to an error:", "error");

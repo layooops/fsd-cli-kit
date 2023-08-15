@@ -1,67 +1,93 @@
-import type {
-  FsdConfig,
-  StylesSettings,
-} from "~/entities/config/lib/types/config.interface";
+import type { FolderProps } from "./folder-with-template.interface";
+import type { StylesSettings } from "~/entities/config/lib/types/fsd-config.interface";
 import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
 
 import { scriptingLanguageFileExtension } from "~/entities/fsd/lib/helpers/file-name-helpers";
+import {
+  cssTemplate,
+  rfcTemplate,
+  storyBookTemplate,
+  testTemplate,
+} from "~/entities/templates/model/ui";
 import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
-
-interface UiFolder {
-  configOptions: FsdConfig["globalSettings"];
-  sliceName?: string;
-}
+import { formatTextByConvention } from "~/shared/lib/utils/case-text";
 
 export function generateUiCSSFileName(
   css: StylesSettings,
-  sliceName = DEFAULT_SLICE_FILE_NAME,
+  sliceNameCased = DEFAULT_SLICE_FILE_NAME,
 ): string | undefined {
   if (css.cssFramework === "none") {
     return undefined;
   }
   if (css.cssFramework === "css-modules") {
-    return `${sliceName}.module.${css.cssPreprocessor}`;
+    return `${sliceNameCased}.module.${css.cssPreprocessor}`;
   }
   if (css.cssFramework === "standard") {
-    return `${sliceName}.module.${css.cssPreprocessor}`;
+    return `${sliceNameCased}.${css.cssPreprocessor}`;
   }
   return undefined;
 }
 
-export const cssInJSContent = (
-  cssInJs?: StylesSettings["cssInJsFramework"],
-): string | undefined => {
-  if (cssInJs === "styled-components" || cssInJs === "emotion") {
-    return `import styled from "${
-      cssInJs === "emotion" ? "@emotion/styled" : "styled-components"
-    }";\n\nconst /* COMPONENT_TEMPLATE */Styled = styled\`  \n\``;
-  }
-  return undefined;
-};
-
 export const uiFolderWithTemplates = ({
   configOptions,
+  namingConvention,
   sliceName = DEFAULT_SLICE_FILE_NAME,
-}: UiFolder): Folder => {
-  const { styles: css, scriptingLanguage } = configOptions;
-  const uiCSSFileName = generateUiCSSFileName(css, sliceName);
+}: FolderProps): Folder => {
+  const {
+    styles: css,
+    scriptingLanguage,
+    testing,
+    documentation,
+  } = configOptions;
 
-  const folder = [
+  const fileName = formatTextByConvention(sliceName, namingConvention.file);
+
+  const uiCSSFileName = generateUiCSSFileName(css, fileName);
+
+  const testingName = `${fileName}.${
+    testing.testFilePostfix
+  }.${scriptingLanguageFileExtension(scriptingLanguage, true)}`;
+
+  const storybookName = `${fileName}.stories.${scriptingLanguageFileExtension(
+    scriptingLanguage,
+    true,
+  )}`;
+
+  const rfcName = `${fileName}.${scriptingLanguageFileExtension(
+    scriptingLanguage,
+    true,
+  )}`;
+
+  const folder: Folder = [
     css.cssFramework === "none" || css.cssInJsFramework !== "none"
       ? null
       : {
           name: uiCSSFileName,
-
-          template: "styles_template.css",
+          content: cssTemplate({ sliceName }),
         },
+    testing.enabled
+      ? {
+          name: testingName,
+          content: testTemplate,
+        }
+      : null,
+    documentation.enabled && documentation.documentTypes.includes("storybook")
+      ? {
+          name: storybookName,
+          content: storyBookTemplate({
+            sliceName,
+            scriptingLanguage,
+            namingConvention,
+          }),
+        }
+      : null,
     {
-      name: `${sliceName}.${scriptingLanguageFileExtension(
-        scriptingLanguage,
-      )}x`,
-      content: cssInJSContent(css.cssInJsFramework),
-      template: `rc_template.${scriptingLanguageFileExtension(
-        scriptingLanguage,
-      )}x`,
+      name: rfcName,
+      content: rfcTemplate({
+        sliceName,
+        namingConvention,
+        configOptions,
+      }).trim(),
     },
   ];
 

@@ -1,11 +1,25 @@
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FolderProps } from "./folder-with-template.interface";
 import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
 
-interface ApiFolder {
-  configOptions: FsdConfig["globalSettings"];
-  sliceName?: string;
-}
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const apiFolderWithTemplates = (props: ApiFolder): Folder => {
-  return [];
+import { scriptingLanguageFileExtension } from "~/entities/fsd/lib/helpers/file-name-helpers";
+import { formatTextByConvention } from "~/shared/lib/utils/case-text";
+
+export const apiFolderWithTemplates = ({
+  sliceName,
+  namingConvention,
+  configOptions,
+}: FolderProps): Folder => {
+  const { scriptingLanguage } = configOptions;
+
+  const fileName = formatTextByConvention(
+    `${sliceName}Api`,
+    namingConvention.file,
+  );
+
+  const folder: Folder = [
+    {
+      name: `${fileName}.${scriptingLanguageFileExtension(scriptingLanguage)}`,
+    },
+  ];
+  return folder;
 };

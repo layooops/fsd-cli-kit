@@ -1,10 +1,10 @@
 import { input } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { FSD_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptSliceName = async (): Promise<string> => {
   const slice = await input({
-    message: PROMPT_MESSAGES.FSD.SLICE,
+    message: FSD_PROMPT_MESSAGES.slice,
     default: "slice",
   });
 

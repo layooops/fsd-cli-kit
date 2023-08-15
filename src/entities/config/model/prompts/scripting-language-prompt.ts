@@ -1,12 +1,12 @@
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptScriptingLanguage = async () =>
   select<FsdConfig["globalSettings"]["scriptingLanguage"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.SCRIPTING_LANGUAGE,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.scriptingLanguage,
     choices: [
       {
         name: "typescript",

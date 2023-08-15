@@ -2,11 +2,11 @@ import type { FSDLayers } from "../../lib/types/fsd.interface";
 
 import { select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { FSD_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
-export const promptFSDLayer = async (): Promise<FSDLayers> => {
+export const promptChooseFSDLayer = async (): Promise<FSDLayers> => {
   const fsdLayer = await select<FSDLayers>({
-    message: PROMPT_MESSAGES.FSD.CHOOSE_LAYER,
+    message: FSD_PROMPT_MESSAGES.chooseLayer,
     choices: [
       {
         name: "layer",
@@ -26,6 +26,5 @@ export const promptFSDLayer = async (): Promise<FSDLayers> => {
       },
     ],
   });
-
   return fsdLayer;
 };

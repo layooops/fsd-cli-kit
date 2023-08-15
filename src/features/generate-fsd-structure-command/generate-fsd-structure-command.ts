@@ -5,22 +5,18 @@ import { segmentListFolderStructure } from "~/entities/fsd/model/folder-structur
 import { segmentSingleFolderStructure } from "~/entities/fsd/model/folder-structure/segment-single-folder-structure";
 import { fsdCliProgram } from "~/shared/api/fsd-cli-program";
 import { logger } from "~/shared/lib/utils";
+import { formatTextByConvention } from "~/shared/lib/utils/case-text";
 import { readFSDConfigFile } from "~/shared/lib/utils/read-config-file";
 
 import { createFolderStructure } from "../create-folder-structure/create-folder-structure";
 import { generateFsdPrompts } from "../generate-fsd-prompts/model/generate-fsd-prompts";
-import { baseTemplateDir } from "./lib/helpers/base-template-dir";
 
-export const generateFsdStructureCommand = async (): Promise<
-  FolderStructure | undefined
-> => {
-  const targetDir = process.cwd();
-
+export const generateFsdStructureCommand = async (): Promise<void> => {
   try {
-    const config = await readFSDConfigFile(targetDir);
+    const targetDir = process.cwd();
+    const config = await readFSDConfigFile({ directory: targetDir });
 
     if (!config) {
-      logger("Config not loaded.", "error");
       fsdCliProgram.help();
       return undefined;
     }
@@ -37,27 +33,30 @@ export const generateFsdStructureCommand = async (): Promise<
         config,
         sliceName: cliResults.sliceName,
       });
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (fsdLayer === "single-segment") {
       folderStructure = await segmentSingleFolderStructure({
         segmentName: cliResults.segments?.single,
         config,
       });
     }
+    const folderName = cliResults.sliceName
+      ? formatTextByConvention(
+          cliResults.sliceName,
+          config.namingConvention.folder,
+        )
+      : cliResults.sliceName;
 
     try {
       await createFolderStructure({
         data: folderStructure,
-        baseDir: cliResults.sliceName ?? undefined,
-        baseTemplateDir,
+        baseDir: folderName ?? undefined,
       });
       logger(`Folder structure for FSD ${fsdLayer} created successfully.`);
     } catch (error) {
       console.error("Error:", error);
     }
-
-    return folderStructure;
   } catch (error) {
     logger(`Error: ${(error as Error).message}`, "error");
-    return undefined;
   }
 };

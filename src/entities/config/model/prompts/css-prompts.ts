@@ -1,12 +1,12 @@
-import type { StylesSettings } from "~/entities/config/lib/types/config.interface";
+import type { StylesSettings } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "../../../../shared/lib/prompt-messages";
+import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export async function promptCssFramework() {
   return select<StylesSettings["cssFramework"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.STYLES.CSS_FRAMEWORK,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.styles.cssFramework,
     choices: [
       {
         name: "standard",
@@ -20,11 +20,6 @@ export async function promptCssFramework() {
         name: "css-in-js",
         value: "css-in-js",
       },
-
-      {
-        name: "other",
-        value: "other",
-      },
       {
         name: "none",
         value: "none",
@@ -34,7 +29,7 @@ export async function promptCssFramework() {
 }
 export async function promptCssPreprocessor() {
   return select<StylesSettings["cssPreprocessor"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.STYLES.CSS_PREPROCESSOR,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.styles.cssPreprocessor,
     choices: [
       {
         name: "none",
@@ -48,16 +43,12 @@ export async function promptCssPreprocessor() {
         name: "sass",
         value: "sass",
       },
-      {
-        name: "other",
-        value: "other",
-      },
     ],
   });
 }
 export async function promptCssInJsFramework() {
   return select<StylesSettings["cssInJsFramework"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.STYLES.CSS_IN_JS_FRAMEWORK,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.styles.cssInJsFramework,
     choices: [
       {
         name: "none",
@@ -70,10 +61,6 @@ export async function promptCssInJsFramework() {
       {
         name: "emotion",
         value: "emotion",
-      },
-      {
-        name: "other",
-        value: "other",
       },
     ],
   });

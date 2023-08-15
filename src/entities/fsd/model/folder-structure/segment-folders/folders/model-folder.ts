@@ -1,16 +1,9 @@
-import type {
-  FsdConfig,
-  ScriptingLanguageType,
-} from "~/entities/config/lib/types/config.interface";
+import type { FolderProps } from "./folder-with-template.interface";
+import type { ScriptingLanguageType } from "~/entities/config/lib/types/fsd-config.interface";
 import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
 
 import { scriptingLanguageFileExtension } from "~/entities/fsd/lib/helpers/file-name-helpers";
 import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
-
-interface ModelFolder {
-  configOptions: FsdConfig["globalSettings"];
-  sliceName?: string;
-}
 
 export const generateModelFileName = (
   sliceName = DEFAULT_SLICE_FILE_NAME,
@@ -24,7 +17,7 @@ export const generateModelFileName = (
 export const modelFolderWithTemplates = ({
   configOptions,
   sliceName,
-}: ModelFolder): Folder => {
+}: FolderProps): Folder => {
   const modelFileName = generateModelFileName(
     sliceName,
     configOptions.scriptingLanguage,

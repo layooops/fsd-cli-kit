@@ -4,18 +4,21 @@ import type {
   FolderStructure,
 } from "../types/folder-structure.interface";
 import type { FsdSegment } from "../types/fsd.interface";
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import fse from "fs-extra";
 import path from "path";
 
-import { FILE_NOT_FOUND_CODE, FSD_CONFIG_NAME } from "~/shared/lib/constants";
+import {
+  FILE_NOT_FOUND_CODE,
+  FSD_CONFIG_NAME_NO_EXT,
+} from "~/shared/lib/constants";
 import { logger } from "~/shared/lib/utils";
 
 export function findParentConfigFileInDirectory(
   directory: string,
 ): string | undefined {
-  const configFile = path.join(directory, FSD_CONFIG_NAME);
+  const configFile = path.join(directory, FSD_CONFIG_NAME_NO_EXT);
   if (fse.existsSync(configFile)) {
     return path.dirname(configFile);
   }
@@ -35,7 +38,6 @@ export const readCustomFile = async ({
   customFilesBasePath?: string;
   filePath: string;
 }): Promise<FolderFile> => {
-
   const SLICE_START = 1;
   const customFilePath = path.join(
     customFilesBasePath || "",

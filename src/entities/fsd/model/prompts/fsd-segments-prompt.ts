@@ -2,11 +2,11 @@ import type { FsdSegment } from "../../lib/types/fsd.interface";
 
 import { checkbox, confirm, select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { FSD_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptFSDSegmentList = async (): Promise<FsdSegment[]> => {
   const answers = await checkbox<FsdSegment>({
-    message: PROMPT_MESSAGES.FSD.SEGMENTS.LIST,
+    message: FSD_PROMPT_MESSAGES.segments.list,
     choices: [
       { name: "ui", value: "ui" },
       { name: "model", value: "model" },
@@ -20,7 +20,7 @@ export const promptFSDSegmentList = async (): Promise<FsdSegment[]> => {
 
 export const promptFSDSingleSegment = async (): Promise<FsdSegment> => {
   const answer = await select<FsdSegment>({
-    message: PROMPT_MESSAGES.FSD.SEGMENTS.SINGLE,
+    message: FSD_PROMPT_MESSAGES.segments.single,
     choices: [
       { name: "ui", value: "ui" },
       { name: "model", value: "model" },
@@ -33,7 +33,7 @@ export const promptFSDSingleSegment = async (): Promise<FsdSegment> => {
 
 export const promptFSDSegmentsFull = async (): Promise<boolean> => {
   const answer = await confirm({
-    message: PROMPT_MESSAGES.FSD.SEGMENTS.FULL,
+    message: FSD_PROMPT_MESSAGES.segments.full,
     default: false,
   });
 

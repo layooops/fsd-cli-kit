@@ -1,23 +1,21 @@
-import type { DocumentationType } from "~/entities/config/lib/types/config.interface";
+import type { DocumentationType } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { checkbox, confirm } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptDocumentationTypes = async () =>
   checkbox<DocumentationType>({
-    message:
-      PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.DOCUMENTATION.DOCUMENT_TYPES,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.documentation.documentTypes,
     choices: [
       { name: "markdown", value: "markdown" },
       { name: "storybook", value: "storybook" },
-      { name: "other", value: "other" },
       { name: "none", value: "none" },
     ],
   });
 
 export const promptDocumentation = async () =>
   confirm({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.DOCUMENTATION.ENABLED,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.documentation.enabled,
     default: false,
   });

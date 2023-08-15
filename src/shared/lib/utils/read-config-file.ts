@@ -1,4 +1,4 @@
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import fse from "fs-extra";
 import path from "path";
@@ -21,10 +21,15 @@ function findConfigFileInDirectory(directory: string): string | undefined {
   return undefined;
 }
 
-export async function readFSDConfigFile(
-  directory: string,
+export async function readFSDConfigFile({
+  directory,
   validate = true,
-): Promise<FsdConfig | undefined> {
+  init = false,
+}: {
+  directory: string;
+  validate?: boolean;
+  init?: boolean;
+}): Promise<FsdConfig | void> {
   if (configCache[directory]) {
     return configCache[directory];
   }
@@ -32,29 +37,28 @@ export async function readFSDConfigFile(
   try {
     const configFile = findConfigFileInDirectory(directory);
 
-    if (configFile) {
-      const configFileContent = await fse.readFile(configFile, "utf8");
-      const config = JSON.parse(configFileContent) as FsdConfig;
-
-      if (validate && !validateConfig()) {
-        throw new Error("Invalid configuration.");
-      }
-
-      const cachedConfig = configCache[directory];
-      if (!cachedConfig) {
-        configCache[directory] = config;
-      }
-
-      return config;
+    if (!configFile) {
+      throw new Error(
+        "Config file not found. You need to create a config file first.",
+      );
     }
 
-    logger(
-      "Config file not found. You need to create a config file first.",
-      "error",
-    );
-    return undefined;
+    const configFileContent = await fse.readFile(configFile, "utf8");
+    const config = JSON.parse(configFileContent) as FsdConfig;
+
+    if (validate && !validateConfig()) {
+      throw new Error("Invalid configuration.");
+    }
+
+    const cachedConfig = configCache[directory];
+    if (!cachedConfig) {
+      configCache[directory] = config;
+    }
+
+    return config;
   } catch (error) {
-    logger("Error reading config file:", "error");
-    return undefined;
+    if (!init) {
+      logger(error as Error, "error");
+    }
   }
 }

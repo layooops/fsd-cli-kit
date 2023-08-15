@@ -96,7 +96,7 @@ export const initializeGit = async (projectDir: string) => {
 
   const isRoot = isRootGitRepo(projectDir);
   const isInside = await isInsideGitRepo(projectDir);
-  const dirName = path.parse(projectDir).name; // Пропускаем полный путь для логгирования
+  const dirName = path.parse(projectDir).name;
 
   if (isInside && isRoot) {
     // Директория является корневым git-репозиторием

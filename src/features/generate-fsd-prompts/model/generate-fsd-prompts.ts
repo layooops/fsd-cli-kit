@@ -4,7 +4,7 @@ import type {
 } from "~/entities/fsd/lib/types/fsd.interface";
 
 import {
-  promptFSDLayer,
+  promptChooseFSDLayer,
   promptFSDSegmentList,
   promptFSDSegmentsFull,
   promptFSDSingleSegment,
@@ -34,7 +34,8 @@ const createFSDLayerDefaultOptions: CreateFSDLayerOptions = {
 
 export const generateFsdPrompts = async () => {
   const generateLayerCliResults = { ...createFSDLayerDefaultOptions };
-  const fsdLayer = await promptFSDLayer();
+  const fsdLayer = await promptChooseFSDLayer();
+
   generateLayerCliResults.fsdLayer = fsdLayer;
 
   const processSegmentList = async () => {

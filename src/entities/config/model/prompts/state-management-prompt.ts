@@ -1,12 +1,12 @@
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptStateManagement = async () =>
   select<FsdConfig["globalSettings"]["stateManagement"]["type"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.STATE_MANAGEMENT,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.stateManagement,
     choices: [
       {
         name: "none",
@@ -23,10 +23,6 @@ export const promptStateManagement = async () =>
       {
         name: "zustand",
         value: "zustand",
-      },
-      {
-        name: "other",
-        value: "other",
       },
     ],
   });

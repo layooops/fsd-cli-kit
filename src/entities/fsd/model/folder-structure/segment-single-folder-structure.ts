@@ -1,6 +1,6 @@
 import type { FolderStructure } from "../../lib/types/folder-structure.interface";
 import type { FsdSegment } from "../../lib/types/fsd.interface";
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import {
   findParentConfigFileInDirectory,
@@ -22,21 +22,17 @@ export const segmentSingleFolderStructure = async ({
       configOptions,
     })[segmentName];
 
-    if (segment) {
-      const customFilesBasePath = findParentConfigFileInDirectory(
-        process.cwd(),
-      );
+    const customFilesBasePath = findParentConfigFileInDirectory(process.cwd());
 
-      await processCustomFilesForSegment(
-        configOptions,
-        resultObject,
-        segmentName,
-        customFilesBasePath,
-      );
+    await processCustomFilesForSegment(
+      configOptions,
+      resultObject,
+      segmentName,
+      customFilesBasePath,
+    );
 
-      if (!resultObject[segmentName]) {
-        resultObject[segmentName] = segment;
-      }
+    if (!resultObject[segmentName]) {
+      resultObject[segmentName] = segment;
     }
   }
 

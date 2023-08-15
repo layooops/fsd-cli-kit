@@ -1,12 +1,12 @@
-import type { FsdConfig } from "~/entities/config/lib/types/config.interface";
+import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 
-import { PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
+import { CONFIG_PROMPT_MESSAGES } from "~/shared/lib/prompt-messages";
 
 export const promptJSFramework = async () =>
   select<FsdConfig["globalSettings"]["framework"]>({
-    message: PROMPT_MESSAGES.CONFIG.GLOBAL_SETTINGS.FRAMEWORK,
+    message: CONFIG_PROMPT_MESSAGES.globalSettings.framework,
     choices: [
       {
         name: "react",
@@ -19,10 +19,6 @@ export const promptJSFramework = async () =>
       {
         name: "none",
         value: "none",
-      },
-      {
-        name: "other",
-        value: "other",
       },
     ],
   });

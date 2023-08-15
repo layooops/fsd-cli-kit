@@ -1,7 +1,12 @@
-import type { FsdConfig } from "../lib/types/config.interface";
+import type { FsdConfig } from "../lib/types/fsd-config.interface";
 
 export const defaultFsdConfig: FsdConfig = {
   autogenerate: true,
+  namingConvention: {
+    file: "kebabCase",
+    folder: "kebabCase",
+    component: "pascalCase",
+  },
   globalSettings: {
     scriptingLanguage: "typescript",
     styles: {
@@ -19,7 +24,7 @@ export const defaultFsdConfig: FsdConfig = {
     },
     documentation: {
       enabled: false,
-      documentTypes: ["markdown"],
+      documentTypes: [],
     },
   },
 };

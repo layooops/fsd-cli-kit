@@ -1,17 +1,7 @@
-import type {
-  FileData,
-  FolderFile,
-} from "~/entities/fsd/lib/types/folder-structure.interface";
+import type { FolderFile } from "~/entities/fsd/lib/types/folder-structure.interface";
 
 import fs from "fs";
 import path from "path";
-
-import {
-  CAMEL_CASE_REGEX,
-  DEFAULT_SLICE_FILE_NAME,
-} from "~/shared/lib/constants";
-
-const COMPONENT_TEMPLATE_REGEX = /\/\*\sCOMPONENT_TEMPLATE\s\*\//g;
 
 export async function createFolder(dirPath?: string): Promise<void> {
   try {
@@ -44,8 +34,6 @@ export async function readTemplateFile(
 export async function processFile(
   fileOrData: FolderFile | undefined,
   folderPath: string,
-  baseTemplateDir: string,
-  baseDir: string | null = null,
 ): Promise<void> {
   if (!fileOrData) {
     return;
@@ -58,79 +46,7 @@ export async function processFile(
       : fileOrData.name ?? "",
   );
 
-  if (typeof fileOrData === "string") {
-    await processStringFile(fileOrData, filePath, baseTemplateDir);
-  } else {
-    await processFileData(fileOrData, filePath, baseTemplateDir, baseDir);
-  }
-}
-
-async function processStringFile(
-  filePathOrData: string,
-  filePath: string,
-  baseTemplateDir: string,
-): Promise<void> {
-  const templatePath = path.join(
-    baseTemplateDir,
-    path.basename(filePathOrData),
-  );
-  const templateContent = await readTemplateFile(templatePath);
-
-  if (!templateContent) {
-    await writeFile(filePath, "");
-    console.warn(
-      `Warning: Template file "${templatePath}" not found. Created an empty file "${filePath}".`,
-    );
-    return;
-  }
-
-  await writeFile(filePath, templateContent);
-}
-
-async function processFileData(
-  fileData: FileData,
-  filePath: string,
-  baseTemplateDir: string,
-  baseDir: string | null,
-): Promise<void> {
-  const { content, template } = fileData;
-
-  if (!template) {
-    await writeFile(filePath, content ?? "");
-    return;
-  }
-
-  const templatePath = path.join(baseTemplateDir, template);
-  const templateContent = await readTemplateFile(templatePath);
-
-  if (!templateContent) {
-    console.warn(
-      `Warning: Template file "${templatePath}" not found. Created an empty file "${filePath}".`,
-    );
-    await writeFile(filePath, content ?? "");
-    return;
-  }
-
-  let finalContent = templateContent
-    .replace("{{content}}", content ?? "")
-    .trim();
-
-  if (finalContent) {
-    const componentName = baseDir || DEFAULT_SLICE_FILE_NAME;
-    const camelCasedComponentName = componentName.replace(
-      CAMEL_CASE_REGEX,
-      (_, char) => char.toUpperCase(),
-    );
-    finalContent = finalContent.replace(
-      COMPONENT_TEMPLATE_REGEX,
-      camelCasedComponentName,
-    );
-
-    await writeFile(filePath, finalContent);
-  } else {
-    console.warn(
-      `Warning: Template file "${templatePath}" is empty. Created an empty file "${filePath}".`,
-    );
-    await writeFile(filePath, "");
+  if (typeof fileOrData !== "string") {
+    await writeFile(filePath, fileOrData.content ?? "");
   }
 }
