@@ -11,11 +11,11 @@ export async function promptCssFramework() {
       {
         name: "standard (default)",
         value: "standard",
-      }, {
+      },
+      {
         value: "css-modules",
       },
       {
-
         value: "css-in-js",
       },
       {
