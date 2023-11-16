@@ -1,6 +1,6 @@
 {
   "name": "fsd-cli-kit",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A CLI tool for easily FSD development",
   "keywords": [
     "cli",

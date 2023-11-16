@@ -1,6 +1,6 @@
 import type { NamingConventionTypes } from "~/entities/config";
 
-import changeCase from "change-case";
+import * as changeCase from "change-case";
 
 export const camelCasedText = (text: string) => changeCase.camelCase(text);
 export const pascalCasedText = (text: string) => changeCase.pascalCase(text);
