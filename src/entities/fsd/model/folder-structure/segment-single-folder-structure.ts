@@ -1,6 +1,5 @@
-import type { FolderStructure } from "../../lib/types/folder-structure.interface";
-import type { FsdSegment } from "../../lib/types/fsd.interface";
-import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
+import type { FolderStructure, FsdSegment } from "../../lib/types";
+import type { FsdConfig } from "~/entities/config";
 
 import {
   findParentConfigFileInDirectory,

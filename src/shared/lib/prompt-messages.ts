@@ -33,5 +33,5 @@ export const FSD_PROMPT_MESSAGES = {
     single: "Choose a segment",
     full: "Choose segments to include for the full structure (default: ui, model, api, lib, and public API)",
   },
-  slice: "Enter the name of the Slice:",
+  sliceName: "Enter the name of the Slice:",
 };

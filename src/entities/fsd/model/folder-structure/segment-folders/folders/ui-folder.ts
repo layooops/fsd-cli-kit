@@ -1,16 +1,17 @@
+import type { Folder } from "../../../../lib/types/folder-structure.interface";
 import type { FolderProps } from "./folder-with-template.interface";
-import type { StylesSettings } from "~/entities/config/lib/types/fsd-config.interface";
-import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
+import type { StylesSettings } from "~/entities/config";
 
-import { scriptingLanguageFileExtension } from "~/entities/fsd/lib/helpers/file-name-helpers";
+import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
+import { formatTextByConvention } from "~/shared/lib/utils/case-text";
+
+import { scriptingLanguageFileExtension } from "../../../../lib/helpers/file-name-helpers";
 import {
   cssTemplate,
   rfcTemplate,
   storyBookTemplate,
   testTemplate,
-} from "~/entities/templates/model/ui";
-import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
-import { formatTextByConvention } from "~/shared/lib/utils/case-text";
+} from "../../../templates/model";
 
 export function generateUiCSSFileName(
   css: StylesSettings,

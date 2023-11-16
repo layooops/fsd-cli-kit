@@ -9,24 +9,48 @@ module.exports = configure({
     presets.node(),
   ],
   extend: {
+    extends: [
+      "plugin:regexp/recommended",
+      "plugin:@conarti/feature-sliced/recommended",
+    ],
+    plugins: ["regexp", "check-file"],
     rules: {
       "no-console": "off",
-      "@typescript-eslint/naming-convention": "warn",
+      "check-file/filename-naming-convention": [
+        "error",
+        {
+          "src/**/*.{js,ts,jsx,tsx}": "KEBAB_CASE",
+        },
+        {
+          ignoreMiddleExtensions: true,
+        },
+      ],
       "no-magic-numbers": "warn",
       "no-useless-catch": "error",
+      "@typescript-eslint/naming-convention": "warn",
       "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-vars": 2,
+      "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/consistent-type-imports": "error",
+      "import/order": 'off',
       "simple-import-sort/imports": [
         "error",
         {
-          "groups": [["^.*\\u0000$"], ["^\\u0000"], ["^node:"], ["^@?\\w"], ["^"], ["^\\."]],
-        }
-      ]
+          groups: [
+            ["^.*\\u0000$"],
+            ["^react", "^@?\\w"],
+            ["^next", "^@?\\w"],
+            ["^\\u0000"],
+            ["^node:"],
+            ["^@?\\w"],
+            ["^"],
+            ["^\\."],
+          ],
+        },
+      ],
     },
-    extends: ["plugin:regexp/recommended"],
-    plugins: ["regexp"],
-    "env": {
-      "jest": true
-    }
+    env: {
+      jest: true,
+    },
   },
 });

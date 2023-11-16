@@ -1,6 +1,9 @@
 import type { FsdConfig } from "../lib/types/fsd-config.interface";
 
+import { FSD_JSON_SCHEMA_LINK } from "~/shared/lib/constants";
+
 export const defaultFsdConfig: FsdConfig = {
+  $schema: FSD_JSON_SCHEMA_LINK,
   autogenerate: true,
   namingConvention: {
     file: "kebabCase",

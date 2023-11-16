@@ -1,4 +1,4 @@
-import type { FSDLayers } from "../../lib/types/fsd.interface";
+import type { FSDLayers } from "~/entities/fsd";
 
 import { select } from "@inquirer/prompts";
 

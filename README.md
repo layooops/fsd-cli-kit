@@ -42,11 +42,11 @@ You can then use the FSD CLI using `npx fsd-cli-kit` from the terminal within yo
 
 The fsd-cli-kit provides the following commands with their aliases and descriptions:
 
-| Command    | Alias   | Description                                      | Options                  |
-| ---------- | ------- | ------------------------------------------------ | ------------------------ |
-| `init`     | `i`     | Initialize the initial FSD configuration.        | `-y, --yes`              |
-| `generate` | `g`     | Generate the FSD structure.                      | `-t, --template`         |
-| `examples` | `e`     | Show usage examples for available commands.      |                          |
+| Command    | Alias | Description                                 | Options          |
+| ---------- | ----- | ------------------------------------------- | ---------------- |
+| `init`     | `i`   | Initialize the initial FSD configuration.   | `-y, --yes`      |
+| `generate` | `g`   | Generate the FSD structure.                 | `-t, --template` |
+| `examples` | `e`   | Show usage examples for available commands. |                  |
 
 ---
 
@@ -79,6 +79,7 @@ When you execute the `init` command, you'll encounter a series of prompts that g
 These prompts allow you to create an initial configuration tailored to your project's needs, which will later be used for generating the FSD structure.
 
 ---
+
 ### Command: `generate|g`
 
 When you use the `generate` command, you will be prompted to choose the type of FSD structure you want to generate.
@@ -98,6 +99,7 @@ Prompts during the `generate` command:
    - **Segments**: Customize segments for the selected slice. Choose from options like `ui`, `model`, `api`, `lib`, and `public API`.
 
 2. **Choose Segments (default: ui, model, api, lib, and public API)**: If you selected `slice` or `segments` earlier, you can choose full segments for the slice. The default options are `ui`, `model`, `api`, `lib`, and `public API`.
+
 ## Examples
 
 Here are a few examples of how to use the FSD CLI:
