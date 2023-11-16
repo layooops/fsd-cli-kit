@@ -1,4 +1,4 @@
-import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
+import type { FsdConfig } from "../../lib/types/fsd-config.interface";
 
 import { confirm, select } from "@inquirer/prompts";
 

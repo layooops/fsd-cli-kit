@@ -4,7 +4,7 @@ import type {
   FolderStructure,
 } from "../types/folder-structure.interface";
 import type { FsdSegment } from "../types/fsd.interface";
-import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
+import type { FsdConfig } from "~/entities/config";
 
 import fse from "fs-extra";
 import path from "path";

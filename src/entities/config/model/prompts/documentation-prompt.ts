@@ -1,4 +1,4 @@
-import type { DocumentationType } from "~/entities/config/lib/types/fsd-config.interface";
+import type { DocumentationType } from "../../lib/types/fsd-config.interface";
 
 import { checkbox, confirm } from "@inquirer/prompts";
 

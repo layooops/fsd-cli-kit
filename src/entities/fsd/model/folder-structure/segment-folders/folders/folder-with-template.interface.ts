@@ -1,7 +1,4 @@
-import type {
-  GlobalSettings,
-  NamingConvention,
-} from "~/entities/config/lib/types/fsd-config.interface";
+import type { GlobalSettings, NamingConvention } from "~/entities/config";
 
 export interface FolderProps {
   configOptions: GlobalSettings;

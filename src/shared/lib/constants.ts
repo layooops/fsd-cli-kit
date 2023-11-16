@@ -1,4 +1,4 @@
-import type { FSDLayers } from "~/entities/fsd/lib/types/fsd.interface";
+import type { FSDLayers } from "~/entities/fsd";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -21,3 +21,6 @@ export const FSD_CLI_APP = "fsd-cli-kit";
 export const FSD_DOCUMENTATION_LINK = "https://feature-sliced.design";
 export const FSD_CLI_GITHUB_LINK =
   "https://github.com/vitaliiastakhov/fsd-cli-kit";
+
+export const FSD_JSON_SCHEMA_LINK =
+  "https://layooops.com/schemas/fsd-cli-schema.json";

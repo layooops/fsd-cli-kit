@@ -1,15 +1,19 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup";
 
-const isDev = process.env.npm_lifecycle_event === 'dev'
+const isDev = process.env.npm_lifecycle_event === "dev";
+const prebuild = process.env.npm_lifecycle_event === "prebuild";
 
 export default defineConfig({
   clean: true,
-  entry: ['src/index.ts'],
-  format: ['esm'],
+  entry: ["src/index.ts"],
+  treeshake: true,
+  format: ["esm"],
   minify: !isDev,
-  metafile: !isDev,
+  metafile: prebuild,
   sourcemap: true,
-  target: 'esnext',
-  outDir: 'dist',
-  onSuccess: isDev ? 'node dist/index.js' : undefined,
-})
+  splitting: true,
+  target: "es2020",
+  outDir: "dist",
+
+  onSuccess: isDev ? "node dist/index.js" : undefined,
+});

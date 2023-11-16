@@ -1,4 +1,4 @@
-import type { FsdSegment } from "../../lib/types/fsd.interface";
+import type { FsdSegment } from "~/entities/fsd";
 
 import { checkbox, confirm, select } from "@inquirer/prompts";
 

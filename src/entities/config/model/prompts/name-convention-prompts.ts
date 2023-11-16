@@ -1,4 +1,4 @@
-import type { NamingConventionTypes } from "~/entities/config/lib/types/fsd-config.interface";
+import type { NamingConventionTypes } from "../../lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 

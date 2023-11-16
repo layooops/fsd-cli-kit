@@ -1,6 +1,6 @@
 import { confirm } from "@inquirer/prompts";
 
-export async function promptAutogeneration(): Promise<boolean> {
+export async function promptAutoGeneration(): Promise<boolean> {
   return confirm({
     message:
       "Would you like to auto-generate templates for some segments? (yes/no)",

@@ -1,8 +1,8 @@
 import {
-  NamingConvention,
   ScriptingLanguageType,
+  NamingConvention,
 } from "~/entities/config/lib/types/fsd-config.interface";
-import { formatTextByConvention } from "../../../../shared/lib/utils/case-text";
+import { formatTextByConvention } from "~/shared/lib/utils/case-text";
 
 export const storyBookTemplate = ({
   sliceName,

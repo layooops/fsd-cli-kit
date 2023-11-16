@@ -1,4 +1,4 @@
-import type { StylesSettings } from "~/entities/config/lib/types/fsd-config.interface";
+import type { StylesSettings } from "../../lib/types/fsd-config.interface";
 
 import { select } from "@inquirer/prompts";
 
