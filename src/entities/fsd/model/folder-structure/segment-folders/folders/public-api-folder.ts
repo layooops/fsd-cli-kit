@@ -1,8 +1,9 @@
+import type { Folder } from "../../../../lib/types/folder-structure.interface";
 import type { FolderProps } from "./folder-with-template.interface";
-import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
 
-import { generatePublicApiFileName } from "~/entities/fsd/lib/helpers/file-name-helpers";
 import { formatTextByConvention } from "~/shared/lib/utils/case-text";
+
+import { generatePublicApiFileName } from "../../../../lib/helpers/file-name-helpers";
 
 export const publicApiFolderWithTemplates = ({
   configOptions,

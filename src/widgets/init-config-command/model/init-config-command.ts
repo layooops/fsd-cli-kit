@@ -1,31 +1,29 @@
-import type { InitCommandOptions } from "~/shared/api/fsd-cli-program";
+import type { InitCommandOptions } from "../lib/types/init-config-options.interface";
 
 import fs from "fs";
 
-import { defaultFsdConfig } from "~/entities/config/model/fsd-config-default";
 import {
+  defaultFsdConfig,
+  promptAutoGeneration,
+  promptConfigExist,
   promptCssFramework,
   promptCssInJsFramework,
   promptCssPreprocessor,
   promptDocumentation,
   promptDocumentationTypes,
   promptJSFramework,
+  promptNamingConvention,
   promptScriptingLanguage,
   promptStateManagement,
   promptTesting,
   promptTestingPostfix,
-} from "~/entities/config/model/prompts";
-import { promptNamingConvention } from "~/entities/config/model/prompts/name-convention-prompts";
-import {
-  promptAutogeneration,
-  promptConfigExist,
-} from "~/entities/config/model/prompts/other-prompts";
+} from "~/entities/config";
 import { FSD_CONFIG_NAME } from "~/shared/lib/constants";
 import { logger } from "~/shared/lib/utils";
 import { formatJsonData } from "~/shared/lib/utils/format-json";
 import { readFSDConfigFile } from "~/shared/lib/utils/read-config-file";
 
-import { logNextStepsAfterInit } from "./next-steps-after-init";
+import { logNextStepsAfterInit } from "../lib/next-steps-after-init";
 
 export const initConfigCommand = async (
   options?: InitCommandOptions,
@@ -44,13 +42,11 @@ export const initConfigCommand = async (
   if (!options?.yes) {
     const { styles } = configCliResults.globalSettings;
 
-    configCliResults.autogenerate = await promptAutogeneration();
-    configCliResults.namingConvention.file = await promptNamingConvention(
-      "files",
-    );
-    configCliResults.namingConvention.folder = await promptNamingConvention(
-      "folder",
-    );
+    configCliResults.autogenerate = await promptAutoGeneration();
+    configCliResults.namingConvention.file =
+      await promptNamingConvention("files");
+    configCliResults.namingConvention.folder =
+      await promptNamingConvention("folder");
 
     if (configCliResults.autogenerate) {
       styles.cssFramework = await promptCssFramework();

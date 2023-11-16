@@ -1,10 +1,10 @@
-import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
-import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
-import type { FsdSegment } from "~/entities/fsd/lib/types/fsd.interface";
+import type { Folder } from "../../../lib/types/folder-structure.interface";
+import type { FsdSegment } from "../../../lib/types/fsd.interface";
+import type { FsdConfig } from "~/entities/config";
 
-import { fsdSegments } from "~/entities/fsd/lib/types/fsd.interface";
 import { DEFAULT_SLICE_FILE_NAME } from "~/shared/lib/constants";
 
+import { fsdSegments } from "../../../lib/types/fsd.interface";
 import {
   apiFolderWithTemplates,
   libFolderWithTemplates,

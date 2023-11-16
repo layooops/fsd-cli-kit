@@ -1,4 +1,4 @@
-import type { FsdConfig } from "~/entities/config/lib/types/fsd-config.interface";
+import type { FsdConfig } from "~/entities/config";
 
 import fse from "fs-extra";
 import path from "path";
@@ -6,8 +6,6 @@ import path from "path";
 import { FSD_CONFIG_NAME } from "../constants";
 import { logger } from "./logger";
 import { validateConfig } from "./validate-config";
-
-const configCache: { [key: string]: FsdConfig | undefined } = {};
 
 function findConfigFileInDirectory(directory: string): string | undefined {
   const configFile = path.join(directory, FSD_CONFIG_NAME);
@@ -30,10 +28,6 @@ export async function readFSDConfigFile({
   validate?: boolean;
   init?: boolean;
 }): Promise<FsdConfig | void> {
-  if (configCache[directory]) {
-    return configCache[directory];
-  }
-
   try {
     const configFile = findConfigFileInDirectory(directory);
 
@@ -48,11 +42,6 @@ export async function readFSDConfigFile({
 
     if (validate && !validateConfig()) {
       throw new Error("Invalid configuration.");
-    }
-
-    const cachedConfig = configCache[directory];
-    if (!cachedConfig) {
-      configCache[directory] = config;
     }
 
     return config;

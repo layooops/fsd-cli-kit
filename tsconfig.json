@@ -8,7 +8,8 @@
     "checkJs": true,
     "baseUrl": "./",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "~/assets/*": ["./assets/*"],
     },
     "outDir": "./dist",
     "noEmit": true,

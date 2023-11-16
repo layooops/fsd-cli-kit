@@ -1,11 +1,10 @@
-import type {
-  Folder,
-  FolderStructure,
-} from "~/entities/fsd/lib/types/folder-structure.interface";
+import type { Folder, FolderStructure } from "~/entities/fsd";
 
 import { select } from "@inquirer/prompts";
 import fse from "fs-extra";
 import path from "path";
+
+import { isValidFolderPathOrFile } from "~/shared/lib/utils/valid-folder";
 
 import { createFolder, processFile } from "./file-handling/file-utils";
 
@@ -23,17 +22,23 @@ const dirAlreadyExistPrompt = async (dir?: string) => {
 
 export async function createFolderStructure({
   data,
-  baseDir = "",
+  customPath = "",
 }: {
   data?: FolderStructure;
-  baseDir?: string;
+  customPath?: string;
 }): Promise<void> {
+  const isFile = isValidFolderPathOrFile(customPath);
+
+  if (isFile && customPath) {
+    await fse.createFile(customPath);
+    return;
+  }
   const filesInIndex: Folder = [];
 
-  const baseDirExists = await fse.promises.stat(baseDir).catch(() => null);
+  const baseDirExists = await fse.promises.stat(customPath).catch(() => null);
 
   if (baseDirExists) {
-    const answer = await dirAlreadyExistPrompt(baseDir);
+    const answer = await dirAlreadyExistPrompt(customPath);
 
     if (answer === "no") {
       return undefined;
@@ -69,7 +74,7 @@ export async function createFolderStructure({
     }
   }
 
-  await createOrUpdateFolder(baseDir);
+  await createOrUpdateFolder(customPath);
 
   if (data) {
     for (const [folderName, filesOrSubfolders] of Object.entries(data)) {
@@ -77,18 +82,18 @@ export async function createFolderStructure({
         Array.isArray(filesOrSubfolders) &&
           filesInIndex.push(...filesOrSubfolders);
       } else {
-        const folderPath = path.join(baseDir, folderName);
+        const folderPath = path.join(customPath, folderName);
         await createOrUpdateFolder(folderPath);
 
         Array.isArray(filesOrSubfolders)
           ? await processFilesOrSubfolders(filesOrSubfolders, folderPath)
           : await createFolderStructure({
               data: filesOrSubfolders,
-              baseDir: folderPath,
+              customPath: folderPath,
             });
       }
     }
   }
 
-  await processFilesOrSubfolders(filesInIndex, baseDir);
+  await processFilesOrSubfolders(filesInIndex, customPath);
 }

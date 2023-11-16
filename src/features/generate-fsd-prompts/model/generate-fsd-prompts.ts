@@ -1,7 +1,5 @@
-import type {
-  FSDLayers,
-  FsdSegment,
-} from "~/entities/fsd/lib/types/fsd.interface";
+import type { GenerateFsdPromptsOptions } from "../lib";
+import type { FSDLayers, FsdSegment } from "~/entities/fsd";
 
 import {
   promptChooseFSDLayer,
@@ -9,7 +7,7 @@ import {
   promptFSDSegmentsFull,
   promptFSDSingleSegment,
   promptSliceName,
-} from "~/entities/fsd/model/prompts";
+} from "~/entities/fsd";
 import { DEFAULT_FSD_LAYER } from "~/shared/lib/constants";
 
 export interface CreateFSDLayerOptions {
@@ -32,53 +30,60 @@ const createFSDLayerDefaultOptions: CreateFSDLayerOptions = {
   },
 };
 
-export const generateFsdPrompts = async () => {
+export const generateFsdPrompts = async (
+  isValidFolder?: boolean,
+  options?: GenerateFsdPromptsOptions,
+) => {
   const generateLayerCliResults = { ...createFSDLayerDefaultOptions };
-  const fsdLayer = await promptChooseFSDLayer();
-
-  generateLayerCliResults.fsdLayer = fsdLayer;
 
   const processSegmentList = async () => {
-    if (!generateLayerCliResults.segments) return;
-
-    const promptedSegments = await promptFSDSegmentsFull();
-    // eslint-disable-next-line require-atomic-updates
-    generateLayerCliResults.segments.full = promptedSegments;
-
-    if (!generateLayerCliResults.segments.full) {
-      // eslint-disable-next-line require-atomic-updates
-      generateLayerCliResults.segments.list = await promptFSDSegmentList();
+    const isFullSegmentList = await promptFSDSegmentsFull();
+    if (generateLayerCliResults.segments) {
+      generateLayerCliResults.segments.full = isFullSegmentList;
+      if (!isFullSegmentList) {
+        generateLayerCliResults.segments.list = await promptFSDSegmentList();
+      }
     }
   };
 
   const processSingleSegment = async () => {
-    if (!generateLayerCliResults.segments) return;
-    // eslint-disable-next-line require-atomic-updates
-    generateLayerCliResults.segments.single = await promptFSDSingleSegment();
+    if (generateLayerCliResults.segments) {
+      generateLayerCliResults.segments.single = await promptFSDSingleSegment();
+    }
   };
 
-  switch (fsdLayer) {
-    case "slice":
-      generateLayerCliResults.sliceName = await promptSliceName();
-      if (generateLayerCliResults.segments) {
-        await processSegmentList();
-      }
-      break;
+  const handleSlicePrompt = async () => {
+    generateLayerCliResults.sliceName = await promptSliceName();
+    await processSegmentList();
+  };
 
-    case "segments":
-      if (generateLayerCliResults.segments) {
-        await processSegmentList();
-      }
-      break;
+  const handleSegmentsPrompt = async () => {
+    await processSegmentList();
+  };
 
-    case "single-segment":
-      if (generateLayerCliResults.segments) {
-        await processSingleSegment();
-      }
-      break;
+  if (options?.slice) {
+    await handleSlicePrompt();
+    generateLayerCliResults.fsdLayer = "slice";
+  } else if (options?.segment) {
+    await processSingleSegment();
+    generateLayerCliResults.fsdLayer = "single-segment";
+  } else if (options?.segments) {
+    await handleSegmentsPrompt();
+    generateLayerCliResults.fsdLayer = "segments";
+  } else if (isValidFolder) {
+    await handleSegmentsPrompt();
+    generateLayerCliResults.fsdLayer = "slice";
+  } else {
+    const fsdLayer = await promptChooseFSDLayer();
+    generateLayerCliResults.fsdLayer = fsdLayer;
 
-    default:
-      break;
+    if (fsdLayer === "slice") {
+      await handleSlicePrompt();
+    } else if (fsdLayer === "segments") {
+      await handleSegmentsPrompt();
+    } else if (fsdLayer === "single-segment") {
+      await processSingleSegment();
+    }
   }
 
   return generateLayerCliResults;

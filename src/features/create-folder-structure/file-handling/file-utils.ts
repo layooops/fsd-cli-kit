@@ -1,4 +1,4 @@
-import type { FolderFile } from "~/entities/fsd/lib/types/folder-structure.interface";
+import type { FolderFile } from "~/entities/fsd";
 
 import fs from "fs";
 import path from "path";

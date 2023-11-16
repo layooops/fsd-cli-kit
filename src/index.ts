@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { runCli } from "./shared/api/fsd-cli-program";
+import { runCli } from "./app/run-cli";
 import { logger } from "./shared/lib/utils";
 
 const EXIT_SUCCESS = 0;

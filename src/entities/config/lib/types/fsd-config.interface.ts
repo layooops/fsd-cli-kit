@@ -59,6 +59,7 @@ export interface NamingConvention {
 }
 
 export interface FsdConfig {
+  $schema?: string;
   autogenerate: boolean;
   namingConvention: NamingConvention;
   globalSettings: GlobalSettings;

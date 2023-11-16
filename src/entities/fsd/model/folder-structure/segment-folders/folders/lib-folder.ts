@@ -1,4 +1,4 @@
-import type { Folder } from "~/entities/fsd/lib/types/folder-structure.interface";
+import type { Folder } from "../../../../lib/types/folder-structure.interface";
 
 export const libFolderWithTemplates = (): Folder => {
   return [];

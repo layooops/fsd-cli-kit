@@ -1,4 +1,4 @@
-import type { ScriptingLanguageType } from "~/entities/config/lib/types/fsd-config.interface";
+import type { ScriptingLanguageType } from "~/entities/config";
 
 export const scriptingLanguageFileExtension = (
   type: ScriptingLanguageType,
