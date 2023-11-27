@@ -5,19 +5,7 @@ on:
     types: [published]
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 20.x
-  #         registry-url: https://registry.npmjs.org
-  #     - run: npm ci
-  #     - run: npm run build
-
   publish-npm:
-    # needs: [build]
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -27,12 +15,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20.x
-          registry-url: https://npm.pkg.github.com/
-          cache: 'npm'
+          registry-url: https://registry.npmjs.org
       - run: |
           npm install
           npm ci
           npm run build
-      - run: npm publish --access public
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
