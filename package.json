@@ -1,6 +1,6 @@
 {
   "name": "fsd-cli-kit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A CLI tool for easily FSD development",
   "keywords": [
     "cli",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/layooops/fsd-cli-kit"
+    "url": "git+https://github.com/layooops/fsd-cli-kit.git"
   },
   "license": "MIT",
   "author": {
@@ -24,7 +24,7 @@
   "exports": "./dist/index.js",
   "main": "dist/index.js",
   "bin": {
-    "fsd-cli-kit": "./dist/index.js"
+    "fsd-cli-kit": "dist/index.js"
   },
   "files": [
     "dist/"
