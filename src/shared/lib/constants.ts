@@ -23,4 +23,4 @@ export const FSD_CLI_GITHUB_LINK =
   "https://github.com/vitaliiastakhov/fsd-cli-kit";
 
 export const FSD_JSON_SCHEMA_LINK =
-  "https://layooops.com/schemas/fsd-cli-schema.json";
+  "https://raw.githubusercontent.com/layooops/fsd-cli-kit/main/schemas/config-schema.json";
