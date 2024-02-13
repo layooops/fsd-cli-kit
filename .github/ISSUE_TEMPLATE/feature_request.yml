@@ -1,6 +1,6 @@
 name: 🚀 Feature Proposal
-description: Suggest a new idea for fsd-cli-kit
-title: "[Feature]: "
+description: Suggest a new idea for fsdx
+title: "Feature: "
 labels:
   - feature
 projects:
@@ -20,7 +20,7 @@ body:
     id: problem-statement
     attributes:
       label: Problem overview
-      description: What problems could fsd-cli-kit solve that it doesn't?
+      description: What problems could fsdx solve that it doesn't?
       placeholder: |-
         I want to make positive changes, but our platform doesn't support it.
     validations:

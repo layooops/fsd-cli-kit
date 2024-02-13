@@ -10,7 +10,7 @@ import {
 } from "~/entities/fsd";
 import { createFolderStructure } from "~/features/create-folder-structure/create-folder-structure";
 import { generateFsdPrompts } from "~/features/generate-fsd-prompts";
-import { fsdCliProgram } from "~/shared/api/fsd-cli-program";
+import { fsdxCommand } from "~/shared/api/fsdx-command";
 import { logger } from "~/shared/lib/utils";
 import { formatTextByConvention } from "~/shared/lib/utils/case-text";
 import { readFSDConfigFile } from "~/shared/lib/utils/read-config-file";
@@ -28,7 +28,7 @@ export const generateFsdStructureCommand = async (
     const config = await readFSDConfigFile({ directory: targetDir });
 
     if (!config) {
-      fsdCliProgram.help();
+      fsdxCommand.help();
       return undefined;
     }
     let folderStructure: FolderStructure | undefined;

@@ -1,5 +1,5 @@
 {
-  "name": "fsd-cli-kit",
+  "name": "fsdx",
   "version": "1.0.5",
   "description": "A CLI tool for easily FSD development",
   "keywords": [
@@ -7,13 +7,13 @@
     "feature-sliced-design",
     "fsd"
   ],
-  "homepage": "https://github.com/layooops/fsd-cli-kit#readme",
+  "homepage": "https://github.com/layooops/fsdx#readme",
   "bugs": {
-    "url": "https://github.com/layooops/fsd-cli-kit/issues"
+    "url": "https://github.com/layooops/fsdx/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/layooops/fsd-cli-kit.git"
+    "url": "git+https://github.com/layooops/fsdx.git"
   },
   "license": "MIT",
   "author": {
@@ -24,7 +24,7 @@
   "exports": "./dist/index.js",
   "main": "dist/index.js",
   "bin": {
-    "fsd-cli-kit": "dist/index.js"
+    "fsdx": "dist/index.js"
   },
   "files": [
     "dist/"

@@ -1,6 +1,6 @@
 name: 🐛 Bug report
-description: Create a bug report to help us improve the fsd-cli-kit
-title: "[Bug]: "
+description: Create a bug report to help us improve the fsdx
+title: "Bug: "
 labels:
  - bug
 projects:

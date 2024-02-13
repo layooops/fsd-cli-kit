@@ -16,8 +16,8 @@ export const logNextStepsAfterInit = (data: string) => {
   console.log("");
   console.log("Follow these steps to start using the FSD CLI:");
   console.log(`\n${chalk.bold("1. Generate FSD Structure:")}`);
-  console.log("   Run: fsd-cli-kit g");
-  console.log("   Example: fsd-cli-kit -g");
+  console.log("   Run: fsdx g");
+  console.log("   Example: fsdx -g");
 
   console.log(`\n${chalk.bold("2. Customize Your Structure:")}`);
   console.log("   Edit the fsd.config.json file to fine-tune settings.");
