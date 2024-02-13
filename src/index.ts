@@ -12,8 +12,6 @@ const main = async () => {
 
     process.exit(EXIT_SUCCESS);
   } catch (error) {
-    logger("Installation aborted due to an error:", "error");
-
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error has occurred.";
     logger(errorMessage, "error");

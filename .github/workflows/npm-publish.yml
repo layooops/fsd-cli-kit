@@ -20,6 +20,10 @@ jobs:
           npm install
           npm ci
           npm run build
+      - name: Set version from release
+        uses: reedyuk/npm-version@1.0.1
+        with:
+          version: ${{ steps.version.outputs.full }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

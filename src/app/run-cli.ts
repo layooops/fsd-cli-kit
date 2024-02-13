@@ -17,6 +17,8 @@ export const runCli = async () => {
     )
     .version(getVersion(), "-v, --version", "Display the version number");
 
+  fsdxCommand.action(startCliAction);
+
   fsdxCommand
     .command("init")
     .alias("i")
