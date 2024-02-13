@@ -1,21 +1,23 @@
 import type { GenerateFsdPromptsOptions } from "~/features/generate-fsd-prompts";
 import type { InitCommandOptions } from "~/widgets/init-config-command";
 
-import { fsdCliProgram } from "~/shared/api/fsd-cli-program";
-import { FSD_CLI_APP } from "~/shared/lib/constants";
+import { fsdxCommand } from "~/shared/api/fsdx-command";
+import { PACKAGE_NAME } from "~/shared/lib/constants";
 import { getVersion } from "~/shared/lib/utils";
 import { generateFsdStructureCommand } from "~/widgets/generate-fsd-structure-command";
 import { initConfigCommand } from "~/widgets/init-config-command";
 
+import { startCliAction } from "./start-cli-action";
+
 export const runCli = async () => {
-  fsdCliProgram
-    .name(FSD_CLI_APP)
+  fsdxCommand
+    .name(PACKAGE_NAME)
     .description(
       `A command-line tool for effortlessly generating folder structures using the Feature Sliced Design FSD methodology.`,
     )
     .version(getVersion(), "-v, --version", "Display the version number");
 
-  fsdCliProgram
+  fsdxCommand
     .command("init")
     .alias("i")
     .option("-y, --yes", "Skip prompts and proceed with default options")
@@ -24,7 +26,7 @@ export const runCli = async () => {
       await initConfigCommand(options);
     });
 
-  fsdCliProgram
+  fsdxCommand
     .command("generate")
     .alias("g")
     .description("Generate the Feature Sliced Design (FSD) Structure")
@@ -43,14 +45,14 @@ export const runCli = async () => {
       await generateFsdStructureCommand(path, options);
     });
 
-  fsdCliProgram
+  fsdxCommand
     .command("examples")
     .alias("e")
     .description("Generate the full FSD structure with example content");
 
-  await fsdCliProgram.parseAsync(process.argv);
+  await fsdxCommand.parseAsync(process.argv);
 
   if (process.argv.slice(2).length === 0) {
-    fsdCliProgram.outputHelp();
+    fsdxCommand.outputHelp();
   }
 };

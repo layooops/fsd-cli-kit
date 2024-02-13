@@ -1,4 +1,4 @@
-# fsd-cli-kit
+# fsdx
 
 A command-line tool for generating folder structures using the [Feature-Sliced Design](https://feature-sliced.design) methodology.
 
@@ -16,31 +16,31 @@ For more information about the Feature-Sliced Design methodology and its princip
 
 ## Installation
 
-You can install the fsd-cli-kit both globally and locally. Here's how:
+You can install the fsdx both globally and locally. Here's how:
 
 ### Global Installation
 
 Install the FSD CLI globally using the following command:
 
 ```bash
-npm install -g fsd-cli-kit
+npm install -g fsdx
 ```
 
-After global installation, you can use the `fsd-cli-kit` command directly from the terminal.
+After global installation, you can use the `fsdx` command directly from the terminal.
 
 ### Local Installation
 
 To install the FSD CLI locally in your project, use the following command:
 
 ```bash
-npm install fsd-cli-kit
+npm install fsdx
 ```
 
-You can then use the FSD CLI using `npx fsd-cli-kit` from the terminal within your project directory.
+You can then use the FSD CLI using `npx fsdx` from the terminal within your project directory.
 
 ## Commands
 
-The fsd-cli-kit provides the following commands with their aliases and descriptions:
+The fsdx provides the following commands with their aliases and descriptions:
 
 | Command    | Alias | Description                                 | Options          |
 | ---------- | ----- | ------------------------------------------- | ---------------- |
@@ -107,7 +107,7 @@ Here are a few examples of how to use the FSD CLI:
 1. Initialize the initial FSD configuration:
 
    ```bash
-   fsd-cli-kit init
+   fsdx init
    ```
 
    This will guide you through setting up your FSD configuration.
@@ -115,7 +115,7 @@ Here are a few examples of how to use the FSD CLI:
 2. Generate the FSD structure:
 
    ```bash
-   fsd-cli-kit generate
+   fsdx generate
    ```
 
    This will generate the folder structure based on your FSD configuration.
@@ -123,7 +123,7 @@ Here are a few examples of how to use the FSD CLI:
 3. Generate the FSD structure with example content:
 
    ```bash
-   fsd-cli-kit examples
+   fsdx examples
    ```
 
    This will generate the folder structure with example content to help you get started.
