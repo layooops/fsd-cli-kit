@@ -1,5 +1,5 @@
-import { GlobalSettings } from '~/entities/config';
-import { generateUiCSSFileName } from '../../../folder-structure/segment-folders/folders';
+import { GlobalSettings } from "~/entities/config";
+import { generateUiCSSFileName } from "../../../folder-structure/segment-folders/folders";
 
 export const reactImportContent = ({
   fileName,

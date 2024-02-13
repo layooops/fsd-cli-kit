@@ -41,6 +41,7 @@ export const generateFsdPrompts = async (
     if (generateLayerCliResults.segments) {
       generateLayerCliResults.segments.full = isFullSegmentList;
       if (!isFullSegmentList) {
+        // eslint-disable-next-line require-atomic-updates
         generateLayerCliResults.segments.list = await promptFSDSegmentList();
       }
     }
@@ -48,6 +49,7 @@ export const generateFsdPrompts = async (
 
   const processSingleSegment = async () => {
     if (generateLayerCliResults.segments) {
+      // eslint-disable-next-line require-atomic-updates
       generateLayerCliResults.segments.single = await promptFSDSingleSegment();
     }
   };

@@ -4,6 +4,6 @@ export const cssTemplate = ({ sliceName }: { sliceName: string }) => {
   const cssName = kebabCasedText(sliceName);
 
   return `.${cssName} {
-  color: oklch(53.57% 0.185 267.56);
+  color: #000;
 }`;
 };

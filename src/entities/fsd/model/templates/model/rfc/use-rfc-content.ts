@@ -1,7 +1,5 @@
-
-
 import { formatTextByConvention } from "~/shared/lib/utils/case-text";
-import { FolderProps } from '../../../folder-structure/segment-folders/folders';
+import { FolderProps } from "../../../folder-structure/segment-folders/folders";
 import { reactImportContent } from "./rfc-imports-content";
 import { cssInJSContent } from "./rfc.template";
 

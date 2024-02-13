@@ -1,7 +1,6 @@
+import { GlobalSettings } from "~/entities/config";
 
-import { GlobalSettings } from '~/entities/config';
-
-import { FolderProps } from '~/entities/fsd/model/folder-structure/segment-folders/folders';
+import { FolderProps } from "~/entities/fsd/model/folder-structure/segment-folders/folders";
 import { useRfcContent } from "./use-rfc-content";
 
 export const cssInJSContent = ({
